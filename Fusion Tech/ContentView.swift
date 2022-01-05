@@ -8,9 +8,22 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var store: Store
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        ZStack {
+            if store.state.isLoading {
+                SplashView(size: 100)
+            } else {
+                if store.state.isAuth {
+                    TabBarView().environmentObject(store)
+                } else {
+                    LoginView().environmentObject(store)
+                }
+            }
+        }.onAppear {
+            asyncCheckUser(store: store)
+        }
     }
 }
 

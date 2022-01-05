@@ -11,7 +11,12 @@ import SwiftUI
 struct Fusion_TechApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            
+            let state = UserState()
+            let reducer = UserReducer()
+            let store = Store(state: state, reducer: reducer)
+            
+            ContentView().environmentObject(store)
         }
     }
 }
