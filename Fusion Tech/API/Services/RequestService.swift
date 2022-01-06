@@ -14,13 +14,14 @@ class RequestService {
     static let shared = RequestService()
     
     // MARK: - Send new request
-    func postNewRequest(data: Request, complition: @escaping (Result<Void, ApiError>) -> Void) {
+    func postNewRequest(requestData: Request, complition: @escaping (Result<Void, ApiError>) -> Void) {
         SessionManager.shared.sessionManager
-            .request(ApiManager.request.path, method: .post, parameters: data)
+            .request(ApiManager.request.path, method: .post, parameters: requestData.toJSON(), encoding: JSONEncoding.default)
             .validate()
             .response { response in
-                print(response.response ?? "No response")
-                print(response.response?.statusCode ?? "no response")
+                print("this is request---->", response.request?.description ?? "No request")
+                print("this is response descript---->", response.response?.description ?? "No description")
+                print("this is response status---->", response.response?.statusCode ?? "no status")
             }
     }
     

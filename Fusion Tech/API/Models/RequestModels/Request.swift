@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 // MARK: - Request
 struct Request: Encodable {
@@ -14,4 +15,8 @@ struct Request: Encodable {
     let title: String
     let dateFrom: Date
     let dateTo: Date
+    
+    func toJSON() -> Parameters {
+        return ["type": type, "comment": comment, "title": title, "dateFrom": dateFrom.formatted(.iso8601), "dateTo": dateTo.formatted(.iso8601)]
+    }
 }

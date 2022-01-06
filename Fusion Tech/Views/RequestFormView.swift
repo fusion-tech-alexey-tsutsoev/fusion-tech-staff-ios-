@@ -54,8 +54,10 @@ struct RequestFormView: View {
             Button {
                 DispatchQueue.main.async {
                     let to = requestVM.isMulti ? requestVM.additioanDate : requestVM.selectedDate
-                    RequestService.shared.postNewRequest(data: Request(type: requestVM.requestType.rawValue, comment: requestVM.comment, title: requestVM.title, dateFrom: requestVM.selectedDate, dateTo: to)) { result in
-                        print("Test")
+                    let requestData = Request(type: requestVM.requestType.rawValue, comment: requestVM.comment, title: requestVM.title, dateFrom: requestVM.selectedDate, dateTo: to)
+                    
+                    RequestService.shared.postNewRequest(requestData: requestData) { result in
+                        print("Test", result)
                     }
                 }
             } label: {
