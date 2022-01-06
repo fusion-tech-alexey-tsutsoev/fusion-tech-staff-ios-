@@ -55,7 +55,6 @@ struct MemberInfoView: View {
         )
         .padding()
         .navigationTitle(Text("\(member.firstNameRu ?? "Jhon") \(member.lastNameRu ?? "Doe")"))
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
