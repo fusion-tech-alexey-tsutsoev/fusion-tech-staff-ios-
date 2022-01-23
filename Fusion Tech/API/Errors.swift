@@ -19,9 +19,9 @@ enum ApiError: Error {
     var errorDescriprion: String? {
         switch self {
         case .invalidCred:
-            return NSLocalizedString("Email or Password not coorect. Please try again", comment: "Test")
+            return NSLocalizedString("Логин или пароль не верные. Пожалуйста, попробуйте снова", comment: "Test")
         case .badResponse:
-            return NSLocalizedString("Bad Response from server", comment: "Test")
+            return NSLocalizedString("Ошибка на сервере", comment: "Test")
         }
     }
 }

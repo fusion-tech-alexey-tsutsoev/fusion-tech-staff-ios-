@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ExytePopupView
 
 struct ContentView: View {
     @EnvironmentObject var store: Store
@@ -23,6 +24,9 @@ struct ContentView: View {
             }
         }.onAppear {
             asyncCheckUser(store: store)
+        }
+        .popup(isPresented: $store.state.isShowToast, type: .floater(verticalPadding: 100), position: .bottom, autohideIn: 5, closeOnTapOutside: true) {
+            CustomToastView(type: store.state.toast?.type ?? .error, title: store.state.toast?.message ?? "Ошибка")
         }
     }
 }

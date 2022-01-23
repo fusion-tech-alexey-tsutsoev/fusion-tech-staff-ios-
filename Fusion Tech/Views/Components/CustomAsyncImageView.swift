@@ -9,12 +9,12 @@ import SwiftUI
 
 // MARK: - UI Image from URL
 struct CustomAsyncImageView: View {
-    let avatar: String?
+    let avatar: String
     let size: CGFloat
     
     var body: some View {
-        if let url = avatar {
-            AsyncImage(url: URL(string: url)) { image in
+        if !avatar.isEmpty {
+            AsyncImage(url: URL(string: avatar)) { image in
                 image
                     .resizable()
                     .scaledToFill()
@@ -23,11 +23,11 @@ struct CustomAsyncImageView: View {
             }
             .frame(width: size, height: size)
             .background(NAV_BACKGROUND)
-            .cornerRadius(50)
+            .clipShape(Circle())
         } else {
             Image(systemName:  "person.circle.fill")
                 .frame(width: size, height: size)
-                .cornerRadius(50)
+                .clipShape(Circle())
         }
     }
 }

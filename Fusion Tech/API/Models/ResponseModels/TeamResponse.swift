@@ -19,7 +19,7 @@ struct TeamMember: Codable, Identifiable {
     let firstName, firstNameRu, lastName, lastNameRu: String?
     let education, educationRu: String?
     let login: String
-    let info: TeamMemberInfo?
+    let info: String?
     let phone, email: String
     let role: TeamMemberRole
     let techRole: String?
@@ -49,18 +49,6 @@ struct TeamMember: Codable, Identifiable {
         case mentorID = "mentor_id"
         case createdAt, updatedAt
     }
-}
-
-// MARK: - TeamMemberInfo
-enum TeamMemberInfo: String, Codable {
-    case cbdoЗаместительГенеральногоДиректораПоРазвитию = "CBDO \nЗаместитель генерального директора по развитию"
-    case empty = ""
-    case info = " "
-    case mostlyJS = "mostly js"
-    case projectManager = "Project Manager"
-    case менеджерПоПродажам = "Менеджер по продажам"
-    case мыВсеУчилисьПонемногуЧемуНибудьИКакНибудь = "Мы все учились понемногу. Чему-нибудь и как-нибудь"
-    case разработчик = "Разработчик"
 }
 
 // MARK: - TeamMemberRole

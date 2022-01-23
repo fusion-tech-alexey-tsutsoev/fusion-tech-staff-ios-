@@ -11,7 +11,7 @@ import Alamofire
 // MARK: - Request Interceptor
 class MyRequestInterceptor: RequestInterceptor {
     // MARK: - Config
-    let retryLimit = 2
+    let retryLimit = 1
     // MARK: - ADAPT
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         print("-------ADAPT---------")

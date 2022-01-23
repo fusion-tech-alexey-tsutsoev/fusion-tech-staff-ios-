@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FloatingLabelTextFieldSwiftUI
+import ExytePopupView
 
 struct RequestFormView: View {
     @ObservedObject private var requestVM = RequestViewModel()
@@ -58,13 +59,21 @@ struct RequestFormView: View {
                     
                     RequestService.shared.postNewRequest(requestData: requestData) { result in
                         print("Test", result)
+                        requestVM.isShowToast = true
+                        switch result {
+                        case .success(let title):
+                            requestVM.toastType = .success
+                            requestVM.toastMessage = title
+                        case .failure(let error):
+                            requestVM.toastType = .error
+                            requestVM.toastMessage = error.errorDescriprion ?? "Что-то пошло не так"
+                        }
                     }
                 }
             } label: {
                 Text("Отправить")
             }
             .getFilled(isDisabled: requestVM.title.isEmpty || requestVM.comment.isEmpty)
-            .disabled(requestVM.title.isEmpty || requestVM.comment.isEmpty)
             
         })
             .frame(
@@ -81,6 +90,9 @@ struct RequestFormView: View {
                     requestVM.isShowToggle = newType == .dayOff
                     requestVM.isAllDay = newType != .dayOff
                 }
+            }
+            .popup(isPresented: $requestVM.isShowToast, type: .floater(verticalPadding: 100), position: .bottom, autohideIn: 5, closeOnTapOutside: true) {
+                CustomToastView(type: requestVM.toastType, title: requestVM.toastMessage)
             }
     }
 }

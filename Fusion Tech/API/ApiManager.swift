@@ -13,13 +13,16 @@ enum ApiManager {
     case signIn
     case signUp
     case user
+    case userUpdate
     case me
     case refresh
     case request
+    case tasks
     
     // MARK: - SERVER LINK
     private var baseURL: String {
-        return "https://staff.fusion-tech.pro/api/v2"
+        return "https://staff.demo.fusion-tech.pro/api/v2" // demo API
+//        return "https://staff.fusion-tech.pro/api/v2" // Prod API
     }
     
     // MARK: - PATH
@@ -31,12 +34,16 @@ enum ApiManager {
             return self.baseURL + "/auth/me"
         case .user:
             return self.baseURL + "/user"
+        case .userUpdate:
+            return self.baseURL + "/user/update"
         case .request:
             return self.baseURL + "/request"
         case .refresh:
             return self.baseURL + "/auth/refresh"
-        default:
-            return self.baseURL
+        case .signUp:
+            return self.baseURL + "/auth/sign-up"
+        case .tasks:
+            return self.baseURL + "/diagram/tasks"
         }
     }
 }

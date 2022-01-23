@@ -25,6 +25,9 @@ class UserReducer {
         case .updateUser(let user):
             state.user = user
             state.isAuth = true
+        case .setToast(let toast, let isSHow):
+            state.toast = toast
+            state.isShowToast = isSHow
         }
     }
 }

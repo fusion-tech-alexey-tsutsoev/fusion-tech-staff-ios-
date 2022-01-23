@@ -8,5 +8,5 @@ target 'Fusion Tech' do
   # Pods for Fusion Tech
 	pod 'Alamofire'
 	pod 'FloatingLabelTextFieldSwiftUI', '~> 4.2'
-  pod 'Macaw', '~> 0.9'
+  pod 'ExytePopupView'
 end

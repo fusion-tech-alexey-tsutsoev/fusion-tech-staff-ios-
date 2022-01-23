@@ -11,7 +11,7 @@ struct MemberInfoView: View {
     let member: TeamMember
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            CustomAsyncImageView(avatar: member.avatar, size: 200)
+            CustomAsyncImageView(avatar: member.avatar ?? "", size: 200)
             
             InfoRowView(title: "Login", info: member.login)
             
@@ -21,30 +21,9 @@ struct MemberInfoView: View {
             
             InfoRowView(title: "Дата рождения", info: dateFormatter(date: member.doB ?? ""))
             
-            HStack(alignment: .center, spacing: 10) {
-                InfoRowView(title: "Телефон", info: member.phone)
-                
-                Button {
-                    guard let url = URL(string: "tel://\(member.phone)") else {
-                        return
-                    }
-                    UIApplication.shared.open(url)
-                } label: {
-                    Image(systemName: "phone.fill").foregroundColor(PRIMARY_COLOR)
-                }
-            }
-            HStack(alignment: .center, spacing: 10) {
-                InfoRowView(title: "Email", info: member.email)
-                
-                Button {
-                    guard let url = URL(string: "mailto:\(member.email)") else {
-                        return
-                    }
-                    UIApplication.shared.open(url)
-                } label: {
-                    Image(systemName: "mail.fill").foregroundColor(PRIMARY_COLOR)
-                }
-            }
+            PhoneInfoRow(phone: member.phone)
+            
+            EmailInfoRow(email: member.email)
         }
         .frame(
             minWidth: 0,
@@ -54,7 +33,7 @@ struct MemberInfoView: View {
             alignment: .topLeading
         )
         .padding()
-        .navigationTitle(Text("\(member.firstNameRu ?? "Jhon") \(member.lastNameRu ?? "Doe")"))
+        .navigationTitle(Text(getFullNameString(member: member)))
     }
 }
 

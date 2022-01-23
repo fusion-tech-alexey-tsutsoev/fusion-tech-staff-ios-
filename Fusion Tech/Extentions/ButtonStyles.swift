@@ -17,6 +17,7 @@ extension Button {
             .background(PRIMARY_COLOR)
             .cornerRadius(CORNER_RADUIS)
             .foregroundColor(isDisabled ? FONT_COLOR : .white)
+            .disabled(isDisabled)
 
     }
     

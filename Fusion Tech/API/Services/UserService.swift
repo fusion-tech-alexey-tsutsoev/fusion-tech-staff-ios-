@@ -20,6 +20,7 @@ class UserService {
             .request(ApiManager.signIn.path, method: .post, parameters: login, encoder: JSONParameterEncoder.default)
             .validate()
             .responseDecodable(of: Account.self) { response in
+                print("response--->", response.error ?? "no value")
                 guard let account = response.value else {
                     complition(.failure(.invalidCred))
                     return
@@ -36,6 +37,51 @@ class UserService {
             .responseDecodable(of: User.self) { response in
                 guard let user = response.value else {
                     complition(.failure(.invalidCred))
+                    return
+                }
+                complition(.success(user))
+            }
+    }
+    
+    // MARK: - sign up
+    func signUp(data: SignUpParameters, complition: @escaping (Result<String, ApiError>) -> Void) {
+        SessionManager.shared.sessionManager
+            .request(ApiManager.signUp.path, method: .post, parameters: data, encoder: JSONParameterEncoder.default)
+            .validate()
+            .response { response in
+                print("status--->", response.response?.statusCode ?? "no status")
+                if response.response?.statusCode == 201 {
+                    complition(.success("Вы зарегестрированы! Ожидайте подтверждения заявки"))
+                    return
+                }
+                complition(.failure(.badResponse))
+            }
+    }
+    
+    // MARK: - update user info
+    func updateUserInfo(data: UpdateUserPayload, id: Int, complition: @escaping (Result<User, ApiError>) -> Void) {
+        SessionManager.shared.sessionManager
+            .request(ApiManager.userUpdate.path + "/\(id)", method: .patch, parameters: data, encoder: JSONParameterEncoder.default)
+            .validate()
+            .responseDecodable(of: User.self) { response in
+                print("status--->", response.response?.statusCode ?? "no status")
+                guard let user = response.value else {
+                    complition(.failure(.badResponse))
+                    return
+                }
+                print("user--->", user)
+                complition(.success(user))
+            }
+    }
+    
+    // MARK: - get user by ID
+    func getUserById(id: Int, complition: @escaping (Result<TeamMember, ApiError>) -> Void) {
+        SessionManager.shared.sessionManager
+            .request(ApiManager.user.path + "/\(id)")
+            .validate()
+            .responseDecodable(of: TeamMember.self) { response in
+                guard let user = response.value else {
+                    complition(.failure(.badResponse))
                     return
                 }
                 complition(.success(user))

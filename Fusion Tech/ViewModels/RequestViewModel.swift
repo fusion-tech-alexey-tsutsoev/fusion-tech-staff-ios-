@@ -21,4 +21,7 @@ class RequestViewModel: ObservableObject {
     @Published var isAllDay = true
     @Published var isMulti = false
     @Published var isShowToggle = false
+    @Published var isShowToast = false
+    @Published var toastType: ToastEnum = .success
+    @Published var toastMessage = ""
 }

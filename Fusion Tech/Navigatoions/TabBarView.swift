@@ -9,6 +9,8 @@ import SwiftUI
 
 // MARK: Bottom Tab Nav Bar
 struct TabBarView: View {
+    // MARK: - Enviroment
+    @EnvironmentObject var store: Store
     // MARK: - Config
     init() {
         let appearance = UITabBar.appearance()
@@ -32,6 +34,14 @@ struct TabBarView: View {
             UserInfoView().tabItem {
                 Image(systemName: "person.fill")
                 Text("Информация")
+            }
+            
+            // MARK: - Admin Panel
+            if store.state.user?.role == "admin" {
+                AdminPanelView().tabItem {
+                    Image(systemName: "chart.bar.fill")
+                    Text("Администрация")
+                }
             }
         }.accentColor(PRIMARY_COLOR)
     }

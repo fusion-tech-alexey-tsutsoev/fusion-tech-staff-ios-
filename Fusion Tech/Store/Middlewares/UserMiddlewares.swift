@@ -12,11 +12,12 @@ func asyncDispatchUser(login: String, password: String, store: Store) {
     DispatchQueue.main.async {
         store.dispatch(action: .setLoading(value: true))
         UserService.shared.login(email: login, password: password) { result in
-            guard let account = try? result.get() else {
-                store.dispatch(action: .setLoading(value: false))
-                return
+            switch result {
+            case .success(let account):
+                store.dispatch(action: .login(account: account))
+            case .failure(let error):
+                store.dispatch(action: .setToast(toast: ToastState(message: error.errorDescriprion ?? "Что-то пошло не так", type: .error), isShow: true))
             }
-            store.dispatch(action: .login(account: account))
             store.dispatch(action: .setLoading(value: false))
         }
     }
@@ -32,6 +33,24 @@ func asyncCheckUser(store: Store) {
                 return
             }
             store.dispatch(action: .updateUser(user: user))
+            store.dispatch(action: .setLoading(value: false))
+        }
+    }
+}
+
+
+// MARK: - Update USer
+func asyncUpdateUser(payload: UpdateUserPayload, id: Int, store: Store) {
+    store.dispatch(action: .setLoading(value: true))
+    DispatchQueue.main.async {
+        UserService.shared.updateUserInfo(data: payload, id: id) { result in
+            switch result {
+            case .success(let user):
+                store.dispatch(action: .updateUser(user: user))
+                store.dispatch(action: .setToast(toast: ToastState(message: "Данные успешно обновлены", type: .success), isShow: true))
+            case .failure(let error):
+                store.dispatch(action: .setToast(toast: ToastState(message: error.errorDescriprion ?? "Что-то пошло не так", type: .error), isShow: true))
+            }
             store.dispatch(action: .setLoading(value: false))
         }
     }

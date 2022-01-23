@@ -14,7 +14,7 @@ class RequestService {
     static let shared = RequestService()
     
     // MARK: - Send new request
-    func postNewRequest(requestData: Request, complition: @escaping (Result<Void, ApiError>) -> Void) {
+    func postNewRequest(requestData: Request, complition: @escaping (Result<String, ApiError>) -> Void) {
         SessionManager.shared.sessionManager
             .request(ApiManager.request.path, method: .post, parameters: requestData.toJSON(), encoding: JSONEncoding.default)
             .validate()
@@ -22,6 +22,11 @@ class RequestService {
                 print("this is request---->", response.request?.description ?? "No request")
                 print("this is response descript---->", response.response?.description ?? "No description")
                 print("this is response status---->", response.response?.statusCode ?? "no status")
+                if response.response?.statusCode == 201 {
+                    complition(.success("Заявка успешно создана"))
+                    return
+                }
+                complition(.failure(.badResponse))
             }
     }
     
@@ -38,6 +43,20 @@ class RequestService {
                     return
                 }
                 complition(.success(requests))
+            }
+    }
+    
+    // MARK: - Get tasks for Admin
+    func getTasksByApi(complition: @escaping (Result<TaskResponse, ApiError>) -> Void) {
+        SessionManager.shared.sessionManager
+            .request(ApiManager.tasks.path)
+            .validate()
+            .responseDecodable(of: TaskResponse.self) { response in
+                guard let tasks = response.value else {
+                    complition(.failure(.badResponse))
+                    return
+                }
+                complition(.success(tasks))
             }
     }
 }

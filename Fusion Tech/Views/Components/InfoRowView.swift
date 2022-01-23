@@ -15,7 +15,7 @@ struct InfoRowView: View {
             Text(title).bold()
             Text(info)
         }
-        
+        .foregroundColor(FONT_COLOR)
     }
 }
 

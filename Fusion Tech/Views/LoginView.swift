@@ -7,48 +7,43 @@
 
 import SwiftUI
 import FloatingLabelTextFieldSwiftUI
+import ExytePopupView
 
 struct LoginView: View {
     // MARK: - Enviroment
     @EnvironmentObject var store: Store
     
-    // MARK: - STATAES
-    @State private var login = ""
-    @State private var password = ""
-    @State private var isShowSignUp = false
-    @State private var isSecure = false
+    // MARK: - View Model
+    @ObservedObject private var loginVM = LoginViewModel()
     
     // MARK: - BODY
     var body: some View {
         VStack {
-            if store.state.isLoading {
-                SplashView(size: 50)
-            }
-            
             Spacer()
             
-            FloatingLabelTextField($login, placeholder: "Email")
-                .floatingBaseStyle().disableAutocorrection(true)
+            FloatingLabelTextField($loginVM.login, placeholder: "Email")
+                .floatingBaseStyle()
+                .disableAutocorrection(true)
                 .textInputAutocapitalization(.never)
                 .keyboardType(.emailAddress)
             
-            FloatingLabelTextField($password, placeholder: "Password")
-                .passwordView(isSecure: $isSecure)
+            FloatingLabelTextField($loginVM.password, placeholder: "Password")
+                .passwordView(isSecure: $loginVM.isSecure)
             
             Spacer()
             
             VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: 20, content: {
                 Button(action: {
-                    asyncDispatchUser(login: login, password: password, store: store)
+                    asyncDispatchUser(login: loginVM.login, password: loginVM.password, store: store)
                 }, label: {
-                    Text("Login")
+                    Text("Вход")
                 })
-                    .getFilled(isDisabled: false)
+                    .getFilled(isDisabled: loginVM.login.isEmpty || loginVM.password.isEmpty)
                 
                 Button(action: {
-                    isShowSignUp.toggle()
+                    loginVM.isShowSignUp.toggle()
                 }, label: {
-                    Text("Sign Up")
+                    Text("Регистрация")
                 })
                     .getOutLined()
             })
@@ -56,9 +51,30 @@ struct LoginView: View {
         .padding()
         .navigationBarBackButtonHidden(true)
         .background(MAIN_BACKGROUND)
-        .sheet(isPresented: $isShowSignUp) {
-            SignUpSheetView()
+        .sheet(isPresented: $loginVM.isShowSignUp) {
+            SignUpSheetView(signUpAction: signUp, OkAction: dissmissSHeet)
         }
+    }
+    
+    func signUp(signUpData: SignUpViewModel) {
+        DispatchQueue.main.async {
+            signUpData.isLoading = true
+            UserService.shared
+                .signUp(data: SignUpParameters(email: signUpData.email, login: signUpData.login, password: signUpData.password, phone: signUpData.phoneNumber)) { result in
+                    switch result {
+                    case .failure(let apiError):
+                        signUpData.alertMessage = apiError.errorDescriprion ?? "Что-то пошло не так"
+                    case .success(let message):
+                        signUpData.alertMessage = message
+                    }
+                    signUpData.isLoading = false
+                    signUpData.isShowAlert = true
+                }
+        }
+    }
+    
+    func dissmissSHeet() {
+        loginVM.isShowSignUp = false
     }
 }
 

@@ -22,6 +22,18 @@ extension FloatingLabelTextField {
             .frame(height: 70)
     }
     
+    // MARK: - get search bar
+    func getSearchBarStyle() -> some View {
+        self
+            .rightView({
+                Image(systemName: "magnifyingglass.circle.fill")
+            })
+            .floatingBaseStyle()
+            .disableAutocorrection(true)
+            .textInputAutocapitalization(.never)
+            .foregroundColor(PRIMARY_COLOR)
+    }
+    
     // MARK: - Password style
     func passwordView(isSecure: Binding<Bool>) -> some View {
         return self

@@ -7,17 +7,33 @@
 
 import Foundation
 
-// MARK: - Format timestamp string to "d, MM YYYY" date
-func dateFormatter(date: String) -> String {
+// MARK: - Format timeStamp to Date
+func timeStampFormatter(date: String) -> Date {
     let formatterStringToDate = DateFormatter()
     formatterStringToDate.locale = Locale(identifier: "en_US_POSIX")
     formatterStringToDate.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-    guard let date = formatterStringToDate.date(from: date) else {
-        return "Invalid Date"
-    }
+
+    return formatterStringToDate.date(from: date) ?? Date()
+}
+
+// MARK: - Format timestamp string to "d, MM YYYY" date
+func dateFormatter(date: String) -> String {
+    let formatteTimeStamp = timeStampFormatter(date: date)
     
     let formatterDateToString = DateFormatter()
     formatterDateToString.dateFormat = "d, MMM YYYY"
     formatterDateToString.locale = Locale(identifier: "ru_RU")
-    return formatterDateToString.string(from: date)
+    return formatterDateToString.string(from: formatteTimeStamp)
+}
+
+// MARK: - Make diff between timestamp and current day
+func makeDateDiff(timeStamp: String) -> String {
+    let formattedTimeStamp = timeStampFormatter(date: timeStamp)
+    
+    let componentsFormatter = DateComponentsFormatter()
+    componentsFormatter.unitsStyle = .abbreviated
+    componentsFormatter.allowedUnits = [. year, .month, .day]
+    
+    let interval = Date().timeIntervalSince(formattedTimeStamp)
+    return componentsFormatter.string(from: interval) ?? "Invalid Date"
 }
