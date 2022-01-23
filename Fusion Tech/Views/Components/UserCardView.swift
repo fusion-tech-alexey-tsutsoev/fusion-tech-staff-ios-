@@ -41,26 +41,31 @@ struct UserCardView: View {
         .border(NAV_BACKGROUND)
         .padding(.bottom, 5)
         .contextMenu {
-                Button {
-                    openLink(link: "tel://\(member.phone)")
-                } label: {
-                    Label("Позвонить контакту", systemImage: "phone.fill")
-                }
-                
-                Button {
-                    openLink(link: "mailto:\(member.email)")
-                } label: {
-                    Label("письмо контакту", systemImage: "mail.fill")
-                }
-                
-                Button {
-                    let workspace = "T6S33GH9R"
-                    let userId = member.slackConversationalID ?? "C6RFKKJ64"
-                    openLink(link: "slack://user?team={\(workspace)}&id={\(userId)}")
-                } label: {
-                    Label("написать в Slack", systemImage: "circle.grid.cross.fill")
-                }
+            Button {
+                openLink(link: "tel://\(member.phone)")
+            } label: {
+                Label("Позвонить контакту", systemImage: "phone.fill")
             }
+            
+            Button {
+                openLink(link: "mailto:\(member.email)")
+            } label: {
+                Label("письмо контакту", systemImage: "mail.fill")
+            }
+            
+            Button {
+                openSlack()
+            } label: {
+                Label("написать в Slack", systemImage: "circle.grid.cross.fill")
+            }
+        }
+    }
+    
+    //MARK: - Helpers
+    private func openSlack() {
+        let workspace = "T6S33GH9R"
+        let userId = member.slackConversationalID ?? "C6RFKKJ64"
+        openLink(link: "slack://user?team={\(workspace)}&id={\(userId)}")
     }
 }
 

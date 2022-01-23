@@ -56,14 +56,19 @@ struct SignUpSheetView: View {
         .padding()
         .alert(signUpVM.alertMessage, isPresented: $signUpVM.isShowAlert) {
             Button("Ok") {
-                signUpVM.alertMessage = ""
-                signUpVM.isShowAlert = false
-                OkAction()
+                onPressOk()
             }
         }
     }
     
-    func getDisabled() -> Bool {
+    // MARK: - Helpers
+    private func getDisabled() -> Bool {
         return signUpVM.phoneNumber.isEmpty || signUpVM.email.isEmpty || signUpVM.password.isEmpty || signUpVM.login.isEmpty
+    }
+    
+    private func onPressOk() {
+        signUpVM.alertMessage = ""
+        signUpVM.isShowAlert = false
+        OkAction()
     }
 }

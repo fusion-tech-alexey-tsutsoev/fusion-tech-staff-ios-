@@ -19,11 +19,7 @@ struct RequestSectionView: View {
                 SplashView(size: 100)
             }
             if requests.isEmpty {
-                VStack(alignment: .center, spacing: 20) {
-                    Image(systemName: "x.circle").resizable().frame(width: 100, height: 100, alignment: .center)
-                    Text("У Вас нет ни одной заявки").bold().font(.largeTitle).multilineTextAlignment(.center)
-                }
-                .padding(.vertical, 100)
+                EmptyDataView(title: "У Вас нет ни одной заявки")
             } else {
                 ForEach(requests) { request in
                     RequestLineView(request: request)
@@ -31,15 +27,20 @@ struct RequestSectionView: View {
             }
         }
         .onAppear {
-            isLoading = true
-            RequestService.shared.getUserRequest(userID: userId) { result in
-                guard let requestsFromApi = try? result.get() else {
-                    return
-                }
-                requests = requestsFromApi
-            }
-            isLoading = false
+            loadRequests()
         }
+    }
+    
+    // MARK: - Helpers
+    private func loadRequests() {
+        isLoading = true
+        RequestService.shared.getUserRequest(userID: userId) { result in
+            guard let requestsFromApi = try? result.get() else {
+                return
+            }
+            requests = requestsFromApi
+        }
+        isLoading = false
     }
 }
 

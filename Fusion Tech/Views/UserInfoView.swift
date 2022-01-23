@@ -53,7 +53,7 @@ struct UserInfoView: View {
                             Text("Something went wrong")
                         }
                     }
-            }
+                }
                 HStack {
                     Button {
                         isShowEdit = true
@@ -78,7 +78,8 @@ struct UserInfoView: View {
         }
     }
     
-    func dismissSheet() {
+    // MARK: - Helpers
+    private func dismissSheet() {
         isShowEdit = false
     }
 }

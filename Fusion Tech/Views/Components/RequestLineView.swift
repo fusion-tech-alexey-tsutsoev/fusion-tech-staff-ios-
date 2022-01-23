@@ -35,13 +35,17 @@ struct RequestLineView: View {
                 VStack(alignment: .leading, spacing: 10, content: {
                     if let dateFrom = request.dateFrom {
                         Text("Когда")
+                        
                         InfoRowView(title: "C", info: dateFormatter(date: dateFrom))
+                        
                         InfoRowView(title: "По", info: dateFormatter(date: request.dateTo))
                     } else {
                         InfoRowView(title: "Дата: ", info: dateFormatter(date: request.dateTo))
                     }
                     InfoRowView(title: "Комментарий: ", info: request.comment)
+                    
                     InfoRowView(title: "Вынес решение: ", info: String(request.updatedBy))
+                    
                     InfoRowView(title: "Статус: ", info: request.status.statusRu)
                 })
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .topLeading)
@@ -56,7 +60,7 @@ struct RequestLineView: View {
     }
     
     // MARK: - Helpers
-    func getSystemNameByStatus() -> String {
+    private func getSystemNameByStatus() -> String {
         switch request.status {
         case .completed:
             return "checkmark.circle.fill"
@@ -71,7 +75,7 @@ struct RequestLineView: View {
         }
     }
     
-    func getColorByStatus() -> Color {
+    private func getColorByStatus() -> Color {
         switch request.status {
         case .wait, .inProgress:
             return Color(uiColor: .systemBlue)
@@ -82,7 +86,7 @@ struct RequestLineView: View {
         }
     }
     
-    func getSystemNameByType() -> String {
+    private func getSystemNameByType() -> String {
         switch request.type {
         case .dayOff:
             return "figure.walk.circle.fill"
@@ -99,7 +103,7 @@ struct RequestLineView: View {
         }
     }
     
-    func getColorByType() -> Color {
+    private func getColorByType() -> Color {
         switch request.type {
         case .dayOff, .vacation:
             return Color(uiColor: .systemOrange)

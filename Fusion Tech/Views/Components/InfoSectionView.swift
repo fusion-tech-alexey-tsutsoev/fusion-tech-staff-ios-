@@ -20,55 +20,58 @@ struct InfoSectionView: View {
     let inCompany: String
     let extraContact: ExtraContact
     
-    //    Email
-    //    Repos -
-    //    Education
-    //    In Company
-    //    Extra Contact -
-    
-    
     // MARK: - Body
     var body: some View {
-            VStack(alignment: .leading, spacing: 10) {
-                CustomAsyncImageView(avatar: avatar, size: 200).padding()
+        VStack(alignment: .leading, spacing: 10) {
+            CustomAsyncImageView(avatar: avatar, size: 200).padding()
+            
+            Group {
+                InfoRowView(title: "Логин:", info: login)
                 
-                Group {
-                    InfoRowView(title: "Логин:", info: login)
-                    InfoRowView(title: "Slack login:", info: slackLogin)
-                    InfoRowView(title: "Телефон:", info: phone)
-                    InfoRowView(title: "Дата Рождения:", info: dateFormatter(date: dob))
-                    InfoRowView(title: "Email", info: email)
-                    InfoRowView(title: "Образование", info: education)
-                    InfoRowView(title: "в компании:", info: inCompany)
+                InfoRowView(title: "Slack login:", info: slackLogin)
+                
+                InfoRowView(title: "Телефон:", info: phone)
+                
+                InfoRowView(title: "Дата Рождения:", info: dateFormatter(date: dob))
+                
+                InfoRowView(title: "Email", info: email)
+                
+                InfoRowView(title: "Образование", info: education)
+                
+                InfoRowView(title: "в компании:", info: inCompany)
+            }
+            
+            CustomDivider()
+            
+            Group {
+                Text("Репозитории: ").bold()
+                
+                ForEach(repos, id: \.self) { repo in
+                    Button {
+                        if let url = URL(string: repo) {
+                            UIApplication.shared.open(url)
+                        }
+                    } label: {
+                        Text(repo)
+                    }
                 }
                 
                 CustomDivider()
                 
-                Group {
-                    Text("Репозитории: ").bold()
-                    ForEach(repos, id: \.self) { repo in
-                        Button {
-                            if let url = URL(string: repo) {
-                                UIApplication.shared.open(url)
-                            }
-                        } label: {
-                            Text(repo)
-                        }
-                    }
-                    
-                    CustomDivider()
-                    
-                    Text("Дополнительный контакт:").bold()
-                    InfoRowView(title: "Кем приходится:", info: extraContact.whoHasTo)
-                    InfoRowView(title: "Имя:", info: extraContact.name)
-                    Button {
-                        openLink(link: "tel://\(extraContact.phoneNumber)")
-                    } label: {
-                        InfoRowView(title: "Телефон:", info: extraContact.phoneNumber)
-                    }
+                Text("Дополнительный контакт:").bold()
+                
+                InfoRowView(title: "Кем приходится:", info: extraContact.whoHasTo)
+                
+                InfoRowView(title: "Имя:", info: extraContact.name)
+                
+                Button {
+                    openLink(link: "tel://\(extraContact.phoneNumber)")
+                } label: {
+                    InfoRowView(title: "Телефон:", info: extraContact.phoneNumber)
                 }
             }
-            .padding(.bottom)
+        }
+        .padding(.bottom)
     }
 }
 

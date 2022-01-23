@@ -31,8 +31,6 @@ struct TaskInfoView: View {
                 
                 InfoRowView(title: "Стек:", info: task.technologies.joined(separator: ","))
                 
-                InfoRowView(title: "Подписаны:", info: task.subscription.map(String.init).joined(separator: ","))
-                
                 InfoRowView(title: "Комментарий:", info: task.comment)
                 
                 if let eventDesc = task.eventDescription {
@@ -85,19 +83,24 @@ struct TaskInfoView: View {
         .listStyle(.grouped)
         .navigationTitle(task.title)
         .onAppear {
-            taskInfoVM.isLoading = true
-            var newValue: [TeamMember] = []
-            task.subscription.forEach { sub in
-                UserService.shared.getUserById(id: sub) { result in
-                    switch (result) {
-                    case .success(let member):
-                        newValue.append(member)
-                    case .failure(let err):
-                        taskInfoVM.error = err.errorDescriprion ?? "Что-то пошло не так"
-                    }
-                    taskInfoVM.subscriptions = newValue
-                    taskInfoVM.isLoading = false
+            loadTeam()
+        }
+    }
+    
+    // MARK: - Helpers
+    private func loadTeam() {
+        taskInfoVM.isLoading = true
+        var newValue: [TeamMember] = []
+        task.subscription.forEach { sub in
+            UserService.shared.getUserById(id: sub) { result in
+                switch (result) {
+                case .success(let member):
+                    newValue.append(member)
+                case .failure(let err):
+                    taskInfoVM.error = err.errorDescriprion ?? "Что-то пошло не так"
                 }
+                taskInfoVM.subscriptions = newValue
+                taskInfoVM.isLoading = false
             }
         }
     }

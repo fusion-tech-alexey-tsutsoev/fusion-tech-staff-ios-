@@ -9,7 +9,9 @@ import SwiftUI
 
 struct CustomDivider: View {
     var body: some View {
-        Divider().background(PRIMARY_COLOR).padding(.vertical)
+        Divider()
+            .background(PRIMARY_COLOR)
+            .padding(.vertical)
     }
 }
 

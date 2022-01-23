@@ -22,40 +22,53 @@ struct AdminPanelView: View {
                         if (adminPanelVM.isLoading) {
                             SplashView(size: 50)
                         }
-                        ForEach(adminPanelVM.filteredTasks) { task in
-                            NavigationLink(destination: TaskInfoView(task: task)) {
-                                TaskCard(task: task)
+                        if adminPanelVM.filteredTasks.isEmpty {
+                            EmptyDataView(title: "Нет таск по запросу")
+                        } else {
+                            ForEach(adminPanelVM.filteredTasks) { task in
+                                NavigationLink(destination: TaskInfoView(task: task)) {
+                                    TaskCard(task: task)
+                                }
                             }
                         }
                     }
                 }
             }
             .onAppear {
-                adminPanelVM.isLoading = true
-                RequestService.shared.getTasksByApi { result in
-                    switch result {
-                    case .success(let tasks):
-                        adminPanelVM.tasks = tasks
-                        adminPanelVM.filteredTasks = tasks
-                    case .failure(let apiErr):
-                        adminPanelVM.error = apiErr.errorDescriprion ?? "тчо-то пошло не так"
-                    }
-                    adminPanelVM.isLoading = false
-                }
+                loadtasks()
             }
             .onChange(of: adminPanelVM.search, perform: { newValue in
-                if !adminPanelVM.search.isEmpty {
-                    let newTasks = adminPanelVM.tasks.filter { item in
-                        item.title.lowercased().contains(adminPanelVM.search.lowercased())
-                    }
-                    withAnimation {
-                        adminPanelVM.filteredTasks = newTasks
-                    }
-                } else {
-                    adminPanelVM.filteredTasks = adminPanelVM.tasks
-                }
+                searchInTasksByTitle(text: newValue)
             })
             .navigationTitle("Список задач")
+        }
+    }
+    
+    // MARK: - Helpers
+    private func loadtasks() {
+        adminPanelVM.isLoading = true
+        RequestService.shared.getTasksByApi { result in
+            switch result {
+            case .success(let tasks):
+                adminPanelVM.tasks = tasks
+                adminPanelVM.filteredTasks = tasks
+            case .failure(let apiErr):
+                adminPanelVM.error = apiErr.errorDescriprion ?? "тчо-то пошло не так"
+            }
+            adminPanelVM.isLoading = false
+        }
+    }
+    
+    private func searchInTasksByTitle(text: String) {
+        if !text.isEmpty {
+            let newTasks = adminPanelVM.tasks.filter { item in
+                item.title.lowercased().contains(text.lowercased())
+            }
+            withAnimation {
+                adminPanelVM.filteredTasks = newTasks
+            }
+        } else {
+            adminPanelVM.filteredTasks = adminPanelVM.tasks
         }
     }
 }

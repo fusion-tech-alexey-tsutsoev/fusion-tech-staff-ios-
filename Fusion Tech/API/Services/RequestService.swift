@@ -19,9 +19,6 @@ class RequestService {
             .request(ApiManager.request.path, method: .post, parameters: requestData.toJSON(), encoding: JSONEncoding.default)
             .validate()
             .response { response in
-                print("this is request---->", response.request?.description ?? "No request")
-                print("this is response descript---->", response.response?.description ?? "No description")
-                print("this is response status---->", response.response?.statusCode ?? "no status")
                 if response.response?.statusCode == 201 {
                     complition(.success("Заявка успешно создана"))
                     return

@@ -56,7 +56,8 @@ struct LoginView: View {
         }
     }
     
-    func signUp(signUpData: SignUpViewModel) {
+    //MARK: - Helpers
+    private func signUp(signUpData: SignUpViewModel) {
         DispatchQueue.main.async {
             signUpData.isLoading = true
             UserService.shared
@@ -73,7 +74,7 @@ struct LoginView: View {
         }
     }
     
-    func dissmissSHeet() {
+    private func dissmissSHeet() {
         loginVM.isShowSignUp = false
     }
 }

@@ -14,62 +14,46 @@ struct RequestFormView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10, content: {
-            Picker("Тип заявки", selection: $requestVM.requestType) {
-                ForEach(RequstEnum.allCases) {
-                    requestType in
-                    Text(requestType.value).tag(requestType)
-                }
-            }
-            .pickerStyle(.wheel)
-            
-            Spacer()
-            
-            DatePicker("Дата заявки", selection: $requestVM.selectedDate, in: Date()..., displayedComponents: !requestVM.isAllDay ? [.date, .hourAndMinute] : .date)
-                .environment(\.locale, Locale(identifier: "ru_RU"))
-            
-            if requestVM.isMulti {
-                DatePicker("Дата окончания", selection: $requestVM.additioanDate, in: requestVM.selectedDate..., displayedComponents: .date)
-                    .environment(\.locale, Locale(identifier: "ru_RU"))
-            }
-            
-            if !requestVM.isAllDay {
-                DatePicker("Дата окончания", selection: $requestVM.additioanDate, in: requestVM.selectedDate..., displayedComponents: [.date, .hourAndMinute]).environment(\.locale, Locale(identifier: "ru_RU"))
-            }
-            
-            if requestVM.isShowToggle {
-                Toggle("На весь день?", isOn: $requestVM.isAllDay.animation())
-            }
-            
-            FloatingLabelTextField($requestVM.title, placeholder: "Заголвоок")
-                .addValidation(.init(condition: !requestVM.title.isEmpty, errorMessage: "Заголовок обязателен"))
-                .isShowError(true)
-                .floatingBaseStyle()
-            
-            FloatingLabelTextField($requestVM.comment, placeholder: "Коментарий")
-                .addValidation(.init(condition: !requestVM.comment.isEmpty, errorMessage: "Комментарий обязателен"))
-                .isShowError(true)
-                .floatingBaseStyle()
-            
-            Spacer()
-            
-            Button {
-                DispatchQueue.main.async {
-                    let to = requestVM.isMulti ? requestVM.additioanDate : requestVM.selectedDate
-                    let requestData = Request(type: requestVM.requestType.rawValue, comment: requestVM.comment, title: requestVM.title, dateFrom: requestVM.selectedDate, dateTo: to)
-                    
-                    RequestService.shared.postNewRequest(requestData: requestData) { result in
-                        print("Test", result)
-                        requestVM.isShowToast = true
-                        switch result {
-                        case .success(let title):
-                            requestVM.toastType = .success
-                            requestVM.toastMessage = title
-                        case .failure(let error):
-                            requestVM.toastType = .error
-                            requestVM.toastMessage = error.errorDescriprion ?? "Что-то пошло не так"
-                        }
+            ScrollView {
+                Picker("Тип заявки", selection: $requestVM.requestType) {
+                    ForEach(RequstEnum.allCases) {
+                        requestType in
+                        Text(requestType.value).tag(requestType)
                     }
                 }
+                .pickerStyle(.wheel)
+                
+                Spacer()
+                
+                DatePicker("Дата заявки", selection: $requestVM.selectedDate, in: Date()..., displayedComponents: !requestVM.isAllDay ? [.date, .hourAndMinute] : .date)
+                    .environment(\.locale, Locale(identifier: "ru_RU"))
+                
+                if requestVM.isMulti {
+                    DatePicker("Дата окончания", selection: $requestVM.additioanDate, in: requestVM.selectedDate..., displayedComponents: .date)
+                        .environment(\.locale, Locale(identifier: "ru_RU"))
+                }
+                
+                if !requestVM.isAllDay {
+                    DatePicker("Дата окончания", selection: $requestVM.additioanDate, in: requestVM.selectedDate..., displayedComponents: [.date, .hourAndMinute]).environment(\.locale, Locale(identifier: "ru_RU"))
+                }
+                
+                if requestVM.isShowToggle {
+                    Toggle("На весь день?", isOn: $requestVM.isAllDay.animation())
+                }
+                
+                FloatingLabelTextField($requestVM.title, placeholder: "Заголвоок")
+                    .addValidation(.init(condition: !requestVM.title.isEmpty, errorMessage: "Заголовок обязателен"))
+                    .isShowError(true)
+                    .floatingBaseStyle()
+                
+                FloatingLabelTextField($requestVM.comment, placeholder: "Коментарий")
+                    .addValidation(.init(condition: !requestVM.comment.isEmpty, errorMessage: "Комментарий обязателен"))
+                    .isShowError(true)
+                    .floatingBaseStyle()
+            }
+            
+            Button {
+                sendRequest()
             } label: {
                 Text("Отправить")
             }
@@ -85,15 +69,40 @@ struct RequestFormView: View {
             )
             .padding()
             .onReceive(requestVM.$requestType) { newType in
-                withAnimation(.easeOut(duration: 0.5)) {
-                    requestVM.isMulti = newType == .vacation || newType == .medical
-                    requestVM.isShowToggle = newType == .dayOff
-                    requestVM.isAllDay = newType != .dayOff
-                }
+                updateType(type: newType)
             }
             .popup(isPresented: $requestVM.isShowToast, type: .floater(verticalPadding: 100), position: .bottom, autohideIn: 5, closeOnTapOutside: true) {
                 CustomToastView(type: requestVM.toastType, title: requestVM.toastMessage)
             }
+    }
+    
+    // MARK: - Helpers
+    private func updateType(type: RequstEnum) {
+        withAnimation(.easeOut(duration: 0.5)) {
+            requestVM.isMulti = type == .vacation || type == .medical
+            requestVM.isShowToggle = type == .dayOff
+            requestVM.isAllDay = type != .dayOff
+        }
+    }
+    
+    private func sendRequest() {
+        DispatchQueue.main.async {
+            let to = requestVM.isMulti ? requestVM.additioanDate : requestVM.selectedDate
+            let requestData = Request(type: requestVM.requestType.rawValue, comment: requestVM.comment, title: requestVM.title, dateFrom: requestVM.selectedDate, dateTo: to)
+            
+            RequestService.shared.postNewRequest(requestData: requestData) { result in
+                print("Test", result)
+                requestVM.isShowToast = true
+                switch result {
+                case .success(let title):
+                    requestVM.toastType = .success
+                    requestVM.toastMessage = title
+                case .failure(let error):
+                    requestVM.toastType = .error
+                    requestVM.toastMessage = error.errorDescriprion ?? "Что-то пошло не так"
+                }
+            }
+        }
     }
 }
 

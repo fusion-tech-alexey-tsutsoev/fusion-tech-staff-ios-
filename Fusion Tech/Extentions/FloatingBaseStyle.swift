@@ -25,7 +25,7 @@ extension FloatingLabelTextField {
     // MARK: - get search bar
     func getSearchBarStyle() -> some View {
         self
-            .rightView({
+            .leftView({
                 Image(systemName: "magnifyingglass.circle.fill")
             })
             .floatingBaseStyle()

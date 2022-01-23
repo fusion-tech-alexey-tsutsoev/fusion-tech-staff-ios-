@@ -89,13 +89,7 @@ struct EditUserView: View {
             
             HStack {
                 Button {
-                    print("Test confirm")
-                    if let id = store.state.user?.id {
-                        asyncUpdateUser(payload: UpdateUserPayload(login: editUserVM.login, phone: editUserVM.phoneNumber, slackName: editUserVM.slackName, email: editUserVM.email, firstName: editUserVM.firstName, firstNameRu: editUserVM.firstNameRu, lastName: editUserVM.lastName, lastNameRu: editUserVM.lastNameRu, education: editUserVM.education, educationRu: editUserVM.education, info: editUserVM.info, doB: editUserVM.dob.formatted(.iso8601), repo: editUserVM.repos), id: id, store: store)
-                    } else {
-                        store.dispatch(action: .setToast(toast: ToastState(message: "Ошибка с ID пользователя", type: .error), isShow: true))
-                    }
-                    dismissSheet()
+                    onConfirm()
                 } label: {
                     Text("Принять")
                 }
@@ -110,13 +104,23 @@ struct EditUserView: View {
                     Text("Отменить")
                 }
                 .foregroundColor(ERROR_COLOR)
-
+                
             }
-
+            
         }
         .onAppear {
             editUserVM.initUser(userInfo: store.state.user)
         }
         .padding()
+    }
+    
+    // MARK: - Helpers
+    private func onConfirm() {
+        if let id = store.state.user?.id {
+            asyncUpdateUser(payload: UpdateUserPayload(login: editUserVM.login, phone: editUserVM.phoneNumber, slackName: editUserVM.slackName, email: editUserVM.email, firstName: editUserVM.firstName, firstNameRu: editUserVM.firstNameRu, lastName: editUserVM.lastName, lastNameRu: editUserVM.lastNameRu, education: editUserVM.education, educationRu: editUserVM.education, info: editUserVM.info, doB: editUserVM.dob.formatted(.iso8601), repo: editUserVM.repos), id: id, store: store)
+        } else {
+            store.dispatch(action: .setToast(toast: ToastState(message: "Ошибка с ID пользователя", type: .error), isShow: true))
+        }
+        dismissSheet()
     }
 }

@@ -26,19 +26,24 @@ struct MemberListView: View {
                 }
             }
             .onAppear {
-                isLoading = true
-                DispatchQueue.main.async {
-                    ListsServices.shared.getActiveUser { result in
-                        guard let users = try? result.get() else {
-                            isLoading = false
-                            return
-                        }
-                        memberList = users
-                        isLoading = false
-                    }
-                }
+                loadTeam()
             }
             .navigationTitle("Наша Команда")
+        }
+    }
+    
+    //MARK: - Helpers
+    private func loadTeam() {
+        isLoading = true
+        DispatchQueue.main.async {
+            ListsServices.shared.getActiveUser { result in
+                guard let users = try? result.get() else {
+                    isLoading = false
+                    return
+                }
+                memberList = users
+                isLoading = false
+            }
         }
     }
 }

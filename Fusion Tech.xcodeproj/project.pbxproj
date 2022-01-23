@@ -37,6 +37,7 @@
 		3655638C279CB3D40042A1FD /* EmailInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3655638B279CB3D40042A1FD /* EmailInfoRow.swift */; };
 		3655638E279CB4BC0042A1FD /* LinkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3655638D279CB4BC0042A1FD /* LinkHelper.swift */; };
 		36556390279CBE580042A1FD /* TaskInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3655638F279CBE580042A1FD /* TaskInfoViewModel.swift */; };
+		366C81EE279DE8F700DD7FAF /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 366C81ED279DE8F700DD7FAF /* EmptyDataView.swift */; };
 		367A67E2277B8FF10094D5EE /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 367A67E1277B8FF10094D5EE /* SplashView.swift */; };
 		36828DB02751A60900E6A7F3 /* Fusion_TechApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36828DAF2751A60900E6A7F3 /* Fusion_TechApp.swift */; };
 		36828DB22751A60900E6A7F3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36828DB12751A60900E6A7F3 /* ContentView.swift */; };
@@ -114,6 +115,7 @@
 		3655638B279CB3D40042A1FD /* EmailInfoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailInfoRow.swift; sourceTree = "<group>"; };
 		3655638D279CB4BC0042A1FD /* LinkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkHelper.swift; sourceTree = "<group>"; };
 		3655638F279CBE580042A1FD /* TaskInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskInfoViewModel.swift; sourceTree = "<group>"; };
+		366C81ED279DE8F700DD7FAF /* EmptyDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataView.swift; sourceTree = "<group>"; };
 		367A67E1277B8FF10094D5EE /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		36828DAC2751A60900E6A7F3 /* Fusion Tech.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fusion Tech.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36828DAF2751A60900E6A7F3 /* Fusion_TechApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fusion_TechApp.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				36556385279C97F70042A1FD /* TaskCard.swift */,
 				36556389279CB30E0042A1FD /* PhoneInfoRow.swift */,
 				3655638B279CB3D40042A1FD /* EmailInfoRow.swift */,
+				366C81ED279DE8F700DD7FAF /* EmptyDataView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -620,6 +623,7 @@
 				36B9138C27909ECB000A2EB2 /* EditUserViewModel.swift in Sources */,
 				3621B113279C5FEA003EEA7D /* CompanyTasks.swift in Sources */,
 				365460CA2784472F0070FFE9 /* RequestSectionView.swift in Sources */,
+				366C81EE279DE8F700DD7FAF /* EmptyDataView.swift in Sources */,
 				3611B0AD276A7A27005B8C7A /* UserInfoView.swift in Sources */,
 				36B4275627712AAE002C8249 /* MemberListView.swift in Sources */,
 				3611B0A1276A6029005B8C7A /* TokenService.swift in Sources */,

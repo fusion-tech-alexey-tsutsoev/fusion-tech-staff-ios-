@@ -12,8 +12,11 @@ struct TaskCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             InfoRowView(title: "Задача: ", info: task.title)
+            
             InfoRowView(title: "Заказчик: ", info: task.lidContactName)
+            
             InfoRowView(title: "Дата начала: ", info: task.projectStartDate != nil ? dateFormatter(date: task.projectStartDate!) : "Не назначено")
+            
             InfoRowView(title: "Дата Конца: ", info: task.projectEndDate != nil ? dateFormatter(date: task.projectEndDate!) : "Не назначено")
         }
         .frame(
@@ -27,18 +30,18 @@ struct TaskCard: View {
         .border(NAV_BACKGROUND)
         .padding(.bottom, 5)
         .contextMenu {
-                Button {
-                    openLink(link: "tel://\(task.lidPhone)")
-                } label: {
-                    Label("Позвонить лиду", systemImage: "phone.fill")
-                }
-                
-                Button {
-                    openLink(link: "mailto:\(task.lidEmail)")
-                } label: {
-                    Label("письмо контакту", systemImage: "mail.fill")
-                }
+            Button {
+                openLink(link: "tel://\(task.lidPhone)")
+            } label: {
+                Label("Позвонить лиду", systemImage: "phone.fill")
             }
+            
+            Button {
+                openLink(link: "mailto:\(task.lidEmail)")
+            } label: {
+                Label("письмо контакту", systemImage: "mail.fill")
+            }
+        }
     }
 }
 

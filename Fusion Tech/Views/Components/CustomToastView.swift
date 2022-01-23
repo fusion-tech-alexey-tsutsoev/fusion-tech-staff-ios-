@@ -10,6 +10,7 @@ import SwiftUI
 struct CustomToastView: View {
     let type: ToastEnum
     let title: String
+    
     var body: some View {
         Text(title)
             .padding(.vertical, 10)
@@ -19,6 +20,7 @@ struct CustomToastView: View {
             .padding()
     }
     
+    // MARK: - Helpers
     private func getColorByType() -> Color {
         switch type {
         case .error:
