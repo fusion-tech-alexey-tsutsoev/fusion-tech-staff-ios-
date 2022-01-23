@@ -22,7 +22,7 @@ struct AdminPanelView: View {
                         if (adminPanelVM.isLoading) {
                             SplashView(size: 50)
                         }
-                        if adminPanelVM.filteredTasks.isEmpty {
+                        if (adminPanelVM.filteredTasks.isEmpty && !adminPanelVM.isLoading) {
                             EmptyDataView(title: "Нет таск по запросу")
                         } else {
                             ForEach(adminPanelVM.filteredTasks) { task in

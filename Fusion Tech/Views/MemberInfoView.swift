@@ -11,19 +11,21 @@ struct MemberInfoView: View {
     let member: TeamMember
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            CustomAsyncImageView(avatar: member.avatar ?? "", size: 200)
+            CustomAsyncImageView(avatar: member.avatar ?? "", size: 200, isShowCustomLoad: false)
             
-            InfoRowView(title: "Login", info: member.login)
-            
-            InfoRowView(title: "Имя", info: "\(member.firstNameRu ?? "Иван") / \(member.firstName ?? "Ivan")")
-            
-            InfoRowView(title: "Фамилия", info: "\(member.lastNameRu ?? "Иванов") / \(member.lastName ?? "Ivanov")")
-            
-            InfoRowView(title: "Дата рождения", info: dateFormatter(date: member.doB ?? ""))
-            
-            PhoneInfoRow(phone: member.phone)
-            
-            EmailInfoRow(email: member.email)
+            Group {
+                InfoRowView(title: "Login", info: member.login)
+                
+                InfoRowView(title: "Имя", info: "\(member.firstNameRu ?? "Иван") / \(member.firstName ?? "Ivan")")
+                
+                InfoRowView(title: "Фамилия", info: "\(member.lastNameRu ?? "Иванов") / \(member.lastName ?? "Ivanov")")
+                
+                InfoRowView(title: "Дата рождения", info: dateFormatter(date: member.doB ?? ""))
+                
+                PhoneInfoRow(phone: member.phone)
+                
+                EmailInfoRow(email: member.email)
+            }
         }
         .frame(
             minWidth: 0,
