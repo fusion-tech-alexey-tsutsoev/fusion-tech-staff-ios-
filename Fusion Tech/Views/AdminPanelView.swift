@@ -18,7 +18,7 @@ struct AdminPanelView: View {
                     .padding(.bottom, 10)
                 
                 ScrollView {
-                    VStack(alignment: .center, spacing: 0) {
+                    LazyVStack(alignment: .center, spacing: 0) {
                         if (adminPanelVM.isLoading) {
                             SplashView(size: 50)
                         }

@@ -14,7 +14,7 @@ struct MemberListView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                VStack(alignment: .center, spacing: 0) {
+                LazyVStack(alignment: .center, spacing: 0) {
                     if isLoading {
                         SplashView(size: 50)
                     }
