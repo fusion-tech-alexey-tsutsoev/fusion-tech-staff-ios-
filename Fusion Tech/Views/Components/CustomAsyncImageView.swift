@@ -11,19 +11,14 @@ import SwiftUI
 struct CustomAsyncImageView: View {
     let avatar: String
     let size: CGFloat
-    var isShowCustomLoad: Bool? // костыль
     
     var body: some View {
         if !avatar.isEmpty {
             AsyncImage(url: URL(string: avatar)) { phase in
                 switch phase {
                 case .empty:
-                    if isShowCustomLoad == nil {
-                        SplashView(size: 25)
-                    } else {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: PRIMARY_COLOR))
-                    }
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: PRIMARY_COLOR))
                 case .success(let image):
                     image
                         .resizable()
