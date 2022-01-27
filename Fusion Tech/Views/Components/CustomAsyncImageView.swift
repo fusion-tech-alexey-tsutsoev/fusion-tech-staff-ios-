@@ -17,6 +17,8 @@ struct CustomAsyncImageView: View {
             AsyncImage(url: URL(string: avatar)) { phase in
                 switch phase {
                 case .empty:
+//                    SplashView(size: 50) // Problem in Splash
+                    // If use default ProgressView all works correctly
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: PRIMARY_COLOR))
                 case .success(let image):

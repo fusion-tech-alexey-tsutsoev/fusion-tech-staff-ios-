@@ -21,9 +21,9 @@ struct TabBarView: View {
     var body: some View {
         TabView {
             // MARK: - Member list
-            MemberListView().tabItem {
-                Image(systemName: "person.3.fill")
-                Text("Команда")
+            HomeNavigation().tabItem {
+                Image(systemName: "house.fill")
+                Text("Главная")
             }
             // MARK: - Add Request
             RequestFormView().tabItem {

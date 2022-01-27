@@ -12,24 +12,20 @@ struct MemberListView: View {
     @State private var memberList: [TeamMember] = []
     
     var body: some View {
-        NavigationView {
-            ScrollView {
-                LazyVStack(alignment: .center, spacing: 0) {
-                    if isLoading {
-                        SplashView(size: 50)
-                    }
-                    ForEach(memberList) { member in
-                        NavigationLink(destination: MemberInfoView(member: member)) {
-                            UserCardView(member: member)
-                        }
+            LazyVStack(alignment: .center, spacing: 0) {
+                if isLoading {
+                    SplashView(size: 50)
+                        .padding(.vertical, 20)
+                }
+                ForEach(memberList) { member in
+                    NavigationLink(destination: MemberInfoView(member: member)) {
+                        UserCardView(member: member)
                     }
                 }
             }
             .onAppear {
                 loadTeam()
             }
-            .navigationTitle("Наша Команда")
-        }
     }
     
     //MARK: - Helpers

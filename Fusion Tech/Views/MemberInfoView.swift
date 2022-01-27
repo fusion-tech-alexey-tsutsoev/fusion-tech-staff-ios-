@@ -9,9 +9,10 @@ import SwiftUI
 
 struct MemberInfoView: View {
     let member: TeamMember
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            CustomAsyncImageView(avatar: member.avatar ?? "", size: 200)
+            CustomAsyncImageView(avatar: member.avatar ?? "", size: 200) // Problem
             
             Group {
                 InfoRowView(title: "Login", info: member.login)

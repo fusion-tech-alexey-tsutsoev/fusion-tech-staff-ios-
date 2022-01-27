@@ -18,6 +18,8 @@ enum ApiManager {
     case refresh
     case request
     case tasks
+    case articles
+    case tags
     
     // MARK: - SERVER LINK
     private var baseURL: String {
@@ -44,6 +46,10 @@ enum ApiManager {
             return self.baseURL + "/auth/sign-up"
         case .tasks:
             return self.baseURL + "/diagram/tasks"
+        case .articles:
+            return self.baseURL + "/articles"
+        case .tags:
+            return self.baseURL + "/tag"
         }
     }
 }
