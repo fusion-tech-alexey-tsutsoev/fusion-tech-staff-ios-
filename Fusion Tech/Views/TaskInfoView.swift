@@ -10,6 +10,7 @@ import SwiftUI
 struct TaskInfoView: View {
     let task: CompanyTask
     @ObservedObject var taskInfoVM = TaskInfoViewModel()
+    
     var body: some View {
         List {
             if taskInfoVM.isLoading {
@@ -76,9 +77,7 @@ struct TaskInfoView: View {
                 } label: {
                     InfoRowView(title: "Upwork:", info: task.proposalLink)
                 }
-
             }
-            
         }
         .listStyle(.grouped)
         .navigationTitle(task.title)

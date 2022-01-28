@@ -9,7 +9,7 @@ import SwiftUI
 import FloatingLabelTextFieldSwiftUI
 
 struct AdminPanelView: View {
-    @ObservedObject var adminPanelVM = AdminPanelModelView()
+    @ObservedObject var adminPanelVM = AdminPanelViewModel()
     var body: some View {
         NavigationView {
             VStack {
@@ -22,6 +22,7 @@ struct AdminPanelView: View {
                         if (adminPanelVM.isLoading) {
                             SplashView(size: 50)
                         }
+                        
                         if (adminPanelVM.filteredTasks.isEmpty && !adminPanelVM.isLoading) {
                             EmptyDataView(title: "Нет таск по запросу")
                         } else {

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Alamofire
 
 struct ArticleCardView: View {
     let article: Article

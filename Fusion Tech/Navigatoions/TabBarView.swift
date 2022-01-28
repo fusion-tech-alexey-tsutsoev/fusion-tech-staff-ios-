@@ -45,10 +45,4 @@ struct TabBarView: View {
             }
         }.accentColor(PRIMARY_COLOR)
     }
-    
-    struct TabBarView_Previews: PreviewProvider {
-        static var previews: some View {
-            TabBarView()
-        }
-    }
 }

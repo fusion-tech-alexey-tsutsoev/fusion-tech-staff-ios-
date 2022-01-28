@@ -30,7 +30,8 @@ struct TeamMember: Codable, Identifiable {
     let workingFrom, additionalContactName, additionalContactType, additionalContactPhone: String?
     let mentorID: Int?
     let createdAt, updatedAt: String
-
+    
+    // MARK: - keys for decoding
     enum CodingKeys: String, CodingKey {
         case avatar, avatarThumbnail, id, firstName
         case firstNameRu = "firstName_ru"

@@ -10,7 +10,6 @@ import Alamofire
 
 // MARK: - ListsServices
 class ListsServices {
-    // MARK: - Singleton
     static let shared = ListsServices()
     
     // MARK: - Get Active User

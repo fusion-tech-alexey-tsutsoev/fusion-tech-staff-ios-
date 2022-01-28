@@ -31,7 +31,8 @@ struct CompanyTask: Codable, Identifiable {
     let projectStartDate, projectEndDate: String?
     let createdAt, updatedAt: String
     let rejectReasonID: Int?
-
+    
+    //MARK: - keys for decoding
     enum CodingKeys: String, CodingKey {
         case id, title
         case bodyDescription = "description"

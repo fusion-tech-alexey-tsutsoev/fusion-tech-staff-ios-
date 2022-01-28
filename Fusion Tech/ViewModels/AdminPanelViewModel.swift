@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-class AdminPanelModelView: ObservableObject {
+// MARK: - Model for administration panel
+class AdminPanelViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var isShowSheet: Bool = false
     @Published var tasks: [CompanyTask] = []

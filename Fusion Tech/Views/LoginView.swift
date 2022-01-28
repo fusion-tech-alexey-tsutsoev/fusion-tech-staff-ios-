@@ -7,7 +7,6 @@
 
 import SwiftUI
 import FloatingLabelTextFieldSwiftUI
-import ExytePopupView
 
 struct LoginView: View {
     // MARK: - Enviroment
@@ -76,11 +75,5 @@ struct LoginView: View {
     
     private func dissmissSHeet() {
         loginVM.isShowSignUp = false
-    }
-}
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
     }
 }

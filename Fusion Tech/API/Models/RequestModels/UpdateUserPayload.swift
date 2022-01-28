@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - Info for update user
 struct UpdateUserPayload: Codable {
     let login, phone, slackName, email: String
     let firstName, firstNameRu, lastName, lastNameRu: String

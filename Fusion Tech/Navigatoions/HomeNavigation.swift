@@ -38,9 +38,3 @@ struct HomeNavigation: View {
         return HOME_PICKER_ARRAY.first(where: { tab in tab.id == selectedTab })?.title ?? ""
     }
 }
-
-struct HomeNavigation_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeNavigation()
-    }
-}

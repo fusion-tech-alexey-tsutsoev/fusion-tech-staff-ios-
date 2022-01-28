@@ -28,7 +28,8 @@ struct User: Codable {
     let additionalContactName, additionalContactType, additionalContactPhone: String?
     let mentorID: Int?
     let createdAt, updatedAt: String
-
+    
+    // MARK: - keys for decoding
     enum CodingKeys: String, CodingKey {
         case avatar, avatarThumbnail, id, firstName
         case firstNameRu = "firstName_ru"
@@ -49,26 +50,26 @@ struct User: Codable {
     }
 }
 
-
+// MARK: null-helper
 class JSONNull: Codable {
-
+    
     public static func == (lhs: JSONNull, rhs: JSONNull) -> Bool {
         return true
     }
-
+    
     public var hashValue: Int {
         return 0
     }
-
+    
     public init() {}
-
+    
     public required init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         if !container.decodeNil() {
             throw DecodingError.typeMismatch(JSONNull.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Wrong type for JSONNull"))
         }
     }
-
+    
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encodeNil()

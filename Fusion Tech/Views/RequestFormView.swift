@@ -91,7 +91,6 @@ struct RequestFormView: View {
             let requestData = Request(type: requestVM.requestType.rawValue, comment: requestVM.comment, title: requestVM.title, dateFrom: requestVM.selectedDate, dateTo: to)
             
             RequestService.shared.postNewRequest(requestData: requestData) { result in
-                print("Test", result)
                 requestVM.isShowToast = true
                 switch result {
                 case .success(let title):
@@ -103,11 +102,5 @@ struct RequestFormView: View {
                 }
             }
         }
-    }
-}
-
-struct RequestFormView_Previews: PreviewProvider {
-    static var previews: some View {
-        RequestFormView()
     }
 }

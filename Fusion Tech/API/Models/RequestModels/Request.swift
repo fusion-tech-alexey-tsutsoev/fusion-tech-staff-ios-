@@ -16,6 +16,7 @@ struct Request: Encodable {
     let dateFrom: Date
     let dateTo: Date
     
+    // MARK: - decode to JSON
     func toJSON() -> Parameters {
         return ["type": type, "comment": comment, "title": title, "dateFrom": dateFrom.formatted(.iso8601), "dateTo": dateTo.formatted(.iso8601)]
     }

@@ -13,7 +13,10 @@ struct SplashView: View {
     
     var body: some View {
         Circle()
-            .stroke(AngularGradient(colors: ARRAY_LOGO_COLORS, center: .center), style: StrokeStyle(lineWidth: size/10, lineCap: .round, dash: [size/100, size/5]))
+            .stroke(
+                AngularGradient(colors: ARRAY_LOGO_COLORS, center: .center),
+                style: StrokeStyle(lineWidth: size/10, lineCap: .round, dash: [size/100, size/5])
+            )
             .onAppear(perform: {
                 withAnimation(Animation.easeInOut(duration: 2).repeatForever()) {
                     isLoading.toggle()

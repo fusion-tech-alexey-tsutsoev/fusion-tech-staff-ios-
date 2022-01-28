@@ -24,7 +24,7 @@ enum ApiManager {
     // MARK: - SERVER LINK
     private var baseURL: String {
         return "https://staff.demo.fusion-tech.pro/api/v2" // demo API
-//        return "https://staff.fusion-tech.pro/api/v2" // Prod API
+        //        return "https://staff.fusion-tech.pro/api/v2" // Prod API
     }
     
     // MARK: - PATH

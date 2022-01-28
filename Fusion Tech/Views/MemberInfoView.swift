@@ -12,7 +12,7 @@ struct MemberInfoView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            CustomAsyncImageView(avatar: member.avatar ?? "", size: 200) // Problem
+            CustomAsyncImageView(avatar: member.avatar ?? "", size: 200)
             
             Group {
                 InfoRowView(title: "Login", info: member.login)

@@ -10,6 +10,7 @@ import SwiftUI
 
 
 extension String {
+    // MARK: - load remote image by URL
     func load() -> UIImage {
         do {
             if let url = URL(string: self) {

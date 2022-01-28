@@ -8,6 +8,7 @@
 import Foundation
 
 extension String {
+    // MARK: - checking whether a string matches an expression
     func match(pattern: String) -> Bool {
         let regex = try? NSRegularExpression(pattern: pattern)
         let range = NSRange(location: 0, length: self.utf16.count)

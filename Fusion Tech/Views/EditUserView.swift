@@ -98,7 +98,6 @@ struct EditUserView: View {
                 Spacer()
                 
                 Button {
-                    print("test cancel")
                     dismissSheet()
                 } label: {
                     Text("Отменить")

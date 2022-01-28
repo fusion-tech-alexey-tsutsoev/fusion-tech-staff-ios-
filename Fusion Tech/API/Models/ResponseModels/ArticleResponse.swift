@@ -17,7 +17,7 @@ struct Article: Codable, Identifiable {
     let createdAt, updatedAt: String
     let addedBy: Int
     let tags: [Tag]
-
+    
     enum CodingKeys: String, CodingKey {
         case id, title
         case bodyDescription = "description"

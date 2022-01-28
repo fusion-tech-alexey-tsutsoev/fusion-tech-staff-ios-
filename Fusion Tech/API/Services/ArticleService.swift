@@ -10,10 +10,9 @@ import Alamofire
 
 // MARK: - service for work with Articles
 class ArticleService {
-    // MARK: - Singleton
     static let shared = ArticleService()
     
-    //MARK: - get articles
+    //MARK: - get all articles
     func getAllArticles(complition: @escaping (Result<ArticleResponse, ApiError>) -> Void) {
         SessionManager.shared.sessionManager
             .request(ApiManager.articles.path)

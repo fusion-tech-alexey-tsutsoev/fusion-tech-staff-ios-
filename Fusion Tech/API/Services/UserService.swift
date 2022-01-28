@@ -10,7 +10,6 @@ import Alamofire
 
 // MARK: - UserService
 class UserService {
-    // MARK: - Singleton
     static let shared = UserService()
     
     // MARK: - login

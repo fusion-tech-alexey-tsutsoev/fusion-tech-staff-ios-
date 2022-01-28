@@ -19,7 +19,7 @@
 		3611B0B0276BBCCB005B8C7A /* UserMiddlewares.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3611B0AF276BBCCB005B8C7A /* UserMiddlewares.swift */; };
 		3621B111279BF337003EEA7D /* AdminPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3621B110279BF337003EEA7D /* AdminPanelView.swift */; };
 		3621B113279C5FEA003EEA7D /* CompanyTasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3621B112279C5FEA003EEA7D /* CompanyTasks.swift */; };
-		3621B115279C61C2003EEA7D /* AdminPanelModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3621B114279C61C2003EEA7D /* AdminPanelModelView.swift */; };
+		3621B115279C61C2003EEA7D /* AdminPanelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3621B114279C61C2003EEA7D /* AdminPanelViewModel.swift */; };
 		3624E385278CB37700605B11 /* CustomToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3624E384278CB37700605B11 /* CustomToastView.swift */; };
 		3624E387278CBE9D00605B11 /* ToastEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3624E386278CBE9D00605B11 /* ToastEnum.swift */; };
 		3624E38B278CC37C00605B11 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3624E38A278CC37C00605B11 /* LoginViewModel.swift */; };
@@ -111,7 +111,7 @@
 		3611B0AF276BBCCB005B8C7A /* UserMiddlewares.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMiddlewares.swift; sourceTree = "<group>"; };
 		3621B110279BF337003EEA7D /* AdminPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPanelView.swift; sourceTree = "<group>"; };
 		3621B112279C5FEA003EEA7D /* CompanyTasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyTasks.swift; sourceTree = "<group>"; };
-		3621B114279C61C2003EEA7D /* AdminPanelModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPanelModelView.swift; sourceTree = "<group>"; };
+		3621B114279C61C2003EEA7D /* AdminPanelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminPanelViewModel.swift; sourceTree = "<group>"; };
 		3624E384278CB37700605B11 /* CustomToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToastView.swift; sourceTree = "<group>"; };
 		3624E386278CBE9D00605B11 /* ToastEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastEnum.swift; sourceTree = "<group>"; };
 		3624E38A278CC37C00605B11 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -485,7 +485,7 @@
 				365460CD27876FEC0070FFE9 /* SignUpViewModel.swift */,
 				3624E38A278CC37C00605B11 /* LoginViewModel.swift */,
 				36B9138B27909ECB000A2EB2 /* EditUserViewModel.swift */,
-				3621B114279C61C2003EEA7D /* AdminPanelModelView.swift */,
+				3621B114279C61C2003EEA7D /* AdminPanelViewModel.swift */,
 				3655638F279CBE580042A1FD /* TaskInfoViewModel.swift */,
 				366C81FE279F46C900DD7FAF /* ArticlesViewModel.swift */,
 			);
@@ -650,7 +650,7 @@
 				365460CE27876FEC0070FFE9 /* SignUpViewModel.swift in Sources */,
 				36B42747276D070A002C8249 /* images.swift in Sources */,
 				366C81F5279F343E00DD7FAF /* HomePickers.swift in Sources */,
-				3621B115279C61C2003EEA7D /* AdminPanelModelView.swift in Sources */,
+				3621B115279C61C2003EEA7D /* AdminPanelViewModel.swift in Sources */,
 				366C820727A08DEF00DD7FAF /* RegexPatterns.swift in Sources */,
 				366C81FF279F46C900DD7FAF /* ArticlesViewModel.swift in Sources */,
 				36B65EA1276913DC002562CD /* Errors.swift in Sources */,

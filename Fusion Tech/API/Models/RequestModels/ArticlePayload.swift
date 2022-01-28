@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - Info for create Article
 struct ArticlePayload: Codable {
     let link: String
     let tags: [Int]
