@@ -9,4 +9,5 @@ target 'Fusion Tech' do
 	pod 'Alamofire'
 	pod 'FloatingLabelTextFieldSwiftUI', '~> 4.2'
   pod 'ExytePopupView'
+  pod 'KeychainSwift', '~> 20.0'
 end

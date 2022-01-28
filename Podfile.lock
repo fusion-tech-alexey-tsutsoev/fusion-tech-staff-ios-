@@ -2,23 +2,27 @@ PODS:
   - Alamofire (5.4.4)
   - ExytePopupView (1.0.3)
   - FloatingLabelTextFieldSwiftUI (4.2.1)
+  - KeychainSwift (20.0.0)
 
 DEPENDENCIES:
   - Alamofire
   - ExytePopupView
   - FloatingLabelTextFieldSwiftUI (~> 4.2)
+  - KeychainSwift (~> 20.0)
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - ExytePopupView
     - FloatingLabelTextFieldSwiftUI
+    - KeychainSwift
 
 SPEC CHECKSUMS:
   Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
   ExytePopupView: 80f250c2c064b018b81ffc606f0d2156005a256c
   FloatingLabelTextFieldSwiftUI: 28c373de56a07ce49318bdeeed18781ee6f2528f
+  KeychainSwift: 0ce6a4d13f7228054d1a71bb1b500448fb2ab837
 
-PODFILE CHECKSUM: 9556891aa5a45e225701c635d410a7f971e93758
+PODFILE CHECKSUM: ed53670986baf6367da65095d8d09523be4d3b92
 
 COCOAPODS: 1.11.2

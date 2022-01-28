@@ -6,40 +6,33 @@
 //
 
 import Foundation
-
-// TODO: - replace UserDefaults to KeyChain
+import KeychainSwift
 
 public class TokenService {
-    // MARK: - User Defaults
-    static private let standard = UserDefaults.standard
+    // MARK: - Init Key Chain
+    static private let keyChain = KeychainSwift()
     
     // MARK: - Getters
     static func getAccess() -> String? {
-        guard let token = standard.string(forKey: "AccessToken") else {
-            return nil
-        }
-        return token
+        return keyChain.get("AccessToken")
     }
     
     static func getRefresh() -> String? {
-        guard let token = standard.string(forKey: "RefreshToken") else {
-            return nil
-        }
-        return token
+        return keyChain.get("RefreshToken")
     }
     
     // MARK: - Setters
     static func setAccess(token: String) {
-        standard.set(token, forKey: "AccessToken")
+        keyChain.set(token, forKey: "AccessToken")
     }
     
     static func setRefresh(token: String) {
-        standard.set(token, forKey: "RefreshToken")
+        keyChain.set(token, forKey: "RefreshToken")
     }
     
     // MARK: - Clear
     static func clearTokens() {
-        standard.removeObject(forKey: "AccessToken")
-        standard.removeObject(forKey: "RefreshToken")
+        keyChain.delete("AccessToken")
+        keyChain.delete("RefreshToken")
     }
 }
