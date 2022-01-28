@@ -53,7 +53,7 @@ struct AdminPanelView: View {
                 adminPanelVM.tasks = tasks
                 adminPanelVM.filteredTasks = tasks
             case .failure(let apiErr):
-                adminPanelVM.error = apiErr.errorDescriprion ?? "тчо-то пошло не так"
+                adminPanelVM.error = apiErr.errorDescriprion
             }
             adminPanelVM.isLoading = false
         }

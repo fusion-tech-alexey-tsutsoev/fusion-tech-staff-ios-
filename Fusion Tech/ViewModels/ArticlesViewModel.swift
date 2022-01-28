@@ -15,4 +15,7 @@ class ArticlesViewModel: ObservableObject {
     
     @Published var isShowFilters = false
     @Published var isSHowSheet = false
+    
+    @Published var postLink: String = ""
+    @Published var selectedTags: [Int] = []
 }

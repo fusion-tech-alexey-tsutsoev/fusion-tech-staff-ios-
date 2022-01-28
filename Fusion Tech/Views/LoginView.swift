@@ -64,7 +64,7 @@ struct LoginView: View {
                 .signUp(data: SignUpParameters(email: signUpData.email, login: signUpData.login, password: signUpData.password, phone: signUpData.phoneNumber)) { result in
                     switch result {
                     case .failure(let apiError):
-                        signUpData.alertMessage = apiError.errorDescriprion ?? "Что-то пошло не так"
+                        signUpData.alertMessage = apiError.errorDescriprion
                     case .success(let message):
                         signUpData.alertMessage = message
                     }

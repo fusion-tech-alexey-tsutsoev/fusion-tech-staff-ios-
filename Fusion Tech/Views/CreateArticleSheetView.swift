@@ -11,9 +11,10 @@ import Alamofire
 
 struct CreateArticleSheetView: View {
     let tags: [TagInfo]
+    let createArticle: () -> Void
     
-    @State private var link: String = ""
-    @State private var selectedTags:[TagInfo] = []
+    @Binding var link: String
+    @Binding var selectedTags: [Int]
     
     var body: some View {
         VStack {
@@ -47,21 +48,29 @@ struct CreateArticleSheetView: View {
                     }
                 }
             }
+            Button {
+                print("tet")
+                createArticle()
+            } label: {
+                Text("Отправить")
+            }
+            .getFilled(isDisabled: link.isEmpty)
+
         }
         .padding()
     }
     
     // MARK: - Helpers
     func containInSelected(tag: TagInfo) -> Bool {
-        return selectedTags.contains(where: { selected in selected.id == tag.id })
+        return selectedTags.contains(where: { selected in selected == tag.id })
     }
     
     func tagAction(tag: TagInfo, isSelected: Bool) {
         withAnimation {
             if isSelected {
-                selectedTags.removeAll(where: { selected in selected.id == tag.id })
+                selectedTags.removeAll(where: { selected in selected == tag.id })
             } else {
-                selectedTags.append(tag)
+                selectedTags.append(tag.id)
             }
         }
     }

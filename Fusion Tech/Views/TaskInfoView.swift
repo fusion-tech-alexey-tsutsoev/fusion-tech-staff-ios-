@@ -97,7 +97,7 @@ struct TaskInfoView: View {
                 case .success(let member):
                     newValue.append(member)
                 case .failure(let err):
-                    taskInfoVM.error = err.errorDescriprion ?? "Что-то пошло не так"
+                    taskInfoVM.error = err.errorDescriprion
                 }
                 taskInfoVM.subscriptions = newValue
                 taskInfoVM.isLoading = false

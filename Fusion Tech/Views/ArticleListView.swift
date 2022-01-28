@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ArticleListView: View {
+    @EnvironmentObject var store: Store
     @ObservedObject var articlesVM = ArticlesViewModel()
     
     private var columns: [GridItem] = [
@@ -19,9 +20,7 @@ struct ArticleListView: View {
         VStack {
             VStack {
                 Button {
-                    withAnimation {
-                        articlesVM.isShowFilters.toggle()
-                    }
+                    animatedFiltersToggle()
                 } label: {
                     HStack {
                         Text("Показать фильтры")
@@ -42,29 +41,69 @@ struct ArticleListView: View {
                 SplashView(size: 50)
                     .padding(.vertical, 20)
             }
-            
-            LazyVGrid(columns: columns, alignment: .center, spacing: 10) {
-                ForEach(articlesVM.articles) { article in
-                    ArticleCardView(article: article, allTags: articlesVM.tags)
+            ZStack(alignment: .bottomTrailing) {
+                ScrollView {
+                    LazyVGrid(columns: columns, alignment: .center, spacing: 10) {
+                        ForEach(articlesVM.articles) { article in
+                            ArticleCardView(article: article, allTags: articlesVM.tags)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.bottom, 50)
                 }
+                
+                Button {
+                    articlesVM.isSHowSheet.toggle()
+                } label: {
+                    Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundStyle(.white, PRIMARY_COLOR)
+                        .frame(width: 50, height: 50)
+                }
+                .position(
+                    x: UIScreen.screenWidth - 40,
+                    y:  UIScreen.screenHeight - 400
+                )
             }
         }
         .onAppear {
             loadArticlesAndTags()
         }
-        .toolbar {
-            Button {
-                articlesVM.isSHowSheet.toggle()
-            } label: {
-                Image(systemName: "plus.circle.fill")
-            }
-        }
         .sheet(isPresented: $articlesVM.isSHowSheet) {
-            CreateArticleSheetView(tags: articlesVM.tags)
+            CreateArticleSheetView(
+                tags: articlesVM.tags,
+                createArticle: createArticle,
+                link: $articlesVM.postLink,
+                selectedTags: $articlesVM.selectedTags
+            )
         }
     }
     
     // MARK: - Helpers
+    private func createArticle() {
+        articlesVM.isSHowSheet.toggle()
+        DispatchQueue.main.async {
+            ArticleService.shared.postArticle(aarticle: ArticlePayload(link: articlesVM.postLink, tags: articlesVM.selectedTags)) { result in
+                print("in result")
+                switch result {
+                case .failure(let err):
+                    print("err")
+                    store.dispatch(action: .setToast(toast: ToastState(message: err.errorDescriprion, type: .error), isShow: true))
+                case .success(let message):
+                    print("good")
+                    store.dispatch(action: .setToast(toast: ToastState(message: message, type: .success), isShow: true))
+                }
+            }
+        }
+    }
+    
+    private func animatedFiltersToggle() {
+        withAnimation {
+            articlesVM.isShowFilters.toggle()
+        }
+    }
+    
     private func loadArticlesAndTags() {
         articlesVM.isLoading = true
         DispatchQueue.main.async {
@@ -72,7 +111,7 @@ struct ArticleListView: View {
             ArticleService.shared.getAllArticles { result in
                 switch result {
                 case .failure(let err):
-                    articlesVM.error = err.errorDescriprion
+                    store.dispatch(action: .setToast(toast: ToastState(message: err.errorDescriprion, type: .error), isShow: true))
                 case .success(let articles):
                     articlesVM.articles = articles
                 }

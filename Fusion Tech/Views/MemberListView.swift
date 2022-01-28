@@ -12,6 +12,7 @@ struct MemberListView: View {
     @State private var memberList: [TeamMember] = []
     
     var body: some View {
+        ScrollView {
             LazyVStack(alignment: .center, spacing: 0) {
                 if isLoading {
                     SplashView(size: 50)
@@ -23,9 +24,10 @@ struct MemberListView: View {
                     }
                 }
             }
-            .onAppear {
-                loadTeam()
-            }
+        }
+        .onAppear {
+            loadTeam()
+        }
     }
     
     //MARK: - Helpers

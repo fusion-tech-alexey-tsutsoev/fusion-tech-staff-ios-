@@ -99,7 +99,7 @@ struct RequestFormView: View {
                     requestVM.toastMessage = title
                 case .failure(let error):
                     requestVM.toastType = .error
-                    requestVM.toastMessage = error.errorDescriprion ?? "Что-то пошло не так"
+                    requestVM.toastMessage = error.errorDescriprion
                 }
             }
         }

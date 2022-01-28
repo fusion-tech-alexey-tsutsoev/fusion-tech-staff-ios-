@@ -18,20 +18,18 @@ struct HomeNavigation: View {
                     }
                 }
                 .pickerStyle(.segmented)
-                ScrollView {
-                    switch selectedTab {
+                switch selectedTab {
                     // MARK: - Team List
-                    case 0:
-                        MemberListView()
+                case 0:
+                    MemberListView()
                     // MARK: - Article List
-                    case 1:
-                        ArticleListView()
-                    default:
-                        Text("Something went wrong")
-                    }
+                case 1:
+                    ArticleListView()
+                default:
+                    Text("Something went wrong")
                 }
-                .navigationTitle(Text(getNavTitle()))
             }
+            .navigationTitle(Text(getNavTitle()))
         }
     }
     

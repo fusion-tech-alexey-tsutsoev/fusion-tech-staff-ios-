@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import Alamofire
 
-// MARK: - service for getting Articles and Tags
+// MARK: - service for work with Articles
 class ArticleService {
     // MARK: - Singleton
     static let shared = ArticleService()
     
+    //MARK: - get articles
     func getAllArticles(complition: @escaping (Result<ArticleResponse, ApiError>) -> Void) {
         SessionManager.shared.sessionManager
             .request(ApiManager.articles.path)
@@ -25,6 +27,7 @@ class ArticleService {
             }
     }
     
+    // MARK: - get all Tags
     func getTags(complition: @escaping (Result<TagResponse, ApiError>) -> Void) {
         SessionManager.shared.sessionManager
             .request(ApiManager.tags.path)
@@ -36,6 +39,20 @@ class ArticleService {
                 }
                 
                 complition(.success(tags))
+            }
+    }
+    
+    //MARK: - post new article
+    func postArticle(aarticle: ArticlePayload, complition: @escaping (Result<String, ApiError>) -> Void) {
+        SessionManager.shared.sessionManager
+            .request(ApiManager.articles.path, method: .post, parameters: aarticle, encoder: JSONParameterEncoder.default)
+            .validate()
+            .response { response in
+                if response.response?.statusCode == 201 {
+                    complition(.success("Статья успешно создана"))
+                    return
+                }
+                complition(.failure(.badResponse))
             }
     }
 }

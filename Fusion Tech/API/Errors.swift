@@ -16,7 +16,7 @@ enum ApiError: Error {
         self.localizedDescription
     }
     
-    var errorDescriprion: String? {
+    var errorDescriprion: String {
         switch self {
         case .invalidCred:
             return NSLocalizedString("Логин или пароль не верные. Пожалуйста, попробуйте снова", comment: "Test")

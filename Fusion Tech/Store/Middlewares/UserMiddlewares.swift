@@ -16,7 +16,7 @@ func asyncDispatchUser(login: String, password: String, store: Store) {
             case .success(let account):
                 store.dispatch(action: .login(account: account))
             case .failure(let error):
-                store.dispatch(action: .setToast(toast: ToastState(message: error.errorDescriprion ?? "Что-то пошло не так", type: .error), isShow: true))
+                store.dispatch(action: .setToast(toast: ToastState(message: error.errorDescriprion, type: .error), isShow: true))
             }
             store.dispatch(action: .setLoading(value: false))
         }
@@ -49,7 +49,7 @@ func asyncUpdateUser(payload: UpdateUserPayload, id: Int, store: Store) {
                 store.dispatch(action: .updateUser(user: user))
                 store.dispatch(action: .setToast(toast: ToastState(message: "Данные успешно обновлены", type: .success), isShow: true))
             case .failure(let error):
-                store.dispatch(action: .setToast(toast: ToastState(message: error.errorDescriprion ?? "Что-то пошло не так", type: .error), isShow: true))
+                store.dispatch(action: .setToast(toast: ToastState(message: error.errorDescriprion, type: .error), isShow: true))
             }
             store.dispatch(action: .setLoading(value: false))
         }
