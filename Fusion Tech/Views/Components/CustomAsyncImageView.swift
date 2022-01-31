@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-// TODO: - fix loader bug with floating content
-
 // MARK: - UI Image from URL
 struct CustomAsyncImageView: View {
     let avatar: String
@@ -19,10 +17,7 @@ struct CustomAsyncImageView: View {
             AsyncImage(url: URL(string: avatar)) { phase in
                 switch phase {
                 case .empty:
-                    //                    SplashView(size: 50) // Problem in Splash
-                    // If use default ProgressView all works correctly
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: PRIMARY_COLOR))
+                    SplashView(size: 50)
                 case .success(let image):
                     image
                         .resizable()
