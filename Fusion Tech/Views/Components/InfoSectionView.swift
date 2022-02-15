@@ -9,7 +9,6 @@ import SwiftUI
 
 struct InfoSectionView: View {
     // MARK: - Fields
-    let avatar: String
     let login: String
     let slackLogin: String
     let phone: String
@@ -23,8 +22,6 @@ struct InfoSectionView: View {
     // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            CustomAsyncImageView(avatar: avatar, size: 200).padding()
-            
             Group {
                 InfoRowView(title: "Логин:", info: login)
                 
@@ -77,6 +74,6 @@ struct InfoSectionView: View {
 
 struct InfoSectionView_Previews: PreviewProvider {
     static var previews: some View {
-        InfoSectionView(avatar: "", login: "Jhon", slackLogin: "Jhon", phone: "123", dob: "", email: "test@re.c", repos: [""], education: "en", inCompany: "12", extraContact: ExtraContact(whoHasTo: "whife", name: "Test", phoneNumber: "123123"))
+        InfoSectionView(login: "Jhon", slackLogin: "Jhon", phone: "123", dob: "", email: "test@re.c", repos: [""], education: "en", inCompany: "12", extraContact: ExtraContact(whoHasTo: "whife", name: "Test", phoneNumber: "123123"))
     }
 }

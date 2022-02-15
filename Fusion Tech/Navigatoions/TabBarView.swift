@@ -42,6 +42,11 @@ struct TabBarView: View {
                     Image(systemName: "chart.bar.fill")
                     Text("Администрация")
                 }
+                
+                ManagmentView().tabItem {
+                    Image(systemName: "doc.on.clipboard")
+                    Text("Менеджмент")
+                }
             }
         }.accentColor(PRIMARY_COLOR)
     }

@@ -26,6 +26,14 @@ func dateFormatter(date: String) -> String {
     return formatterDateToString.string(from: formatteTimeStamp)
 }
 
+// MARK: - Eng Format Date string to "EEEE d, MM YYYY" date
+func engDateFormatter(date: Date) -> String {
+    let formatterDateToString = DateFormatter()
+    formatterDateToString.dateFormat = "EEEE d, MMMM YYYY"
+    formatterDateToString.locale = Locale(identifier: "en_EN")
+    return formatterDateToString.string(from: date)
+}
+
 // MARK: - Make diff between timestamp and current day
 func makeDateDiff(timeStamp: String) -> String {
     let formattedTimeStamp = timeStampFormatter(date: timeStamp)
