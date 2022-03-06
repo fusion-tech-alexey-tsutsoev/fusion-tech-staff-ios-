@@ -9,8 +9,8 @@ import SwiftUI
 
 // MARK: - Model for login
 class LoginViewModel: ObservableObject {
-    @Published var login = "alexey" // temp
-    @Published var password = "qweqwe" // temp
+    @Published var login = ""
+    @Published var password = ""
     @Published var isShowSignUp = false
     @Published var isSecure = false
 }
