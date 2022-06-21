@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct TaskCard: View {
-    let task: CompanyTask
+    let task: CRM
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             InfoRowView(title: "Задача: ", info: task.title)
             
             InfoRowView(title: "Заказчик: ", info: task.lidContactName)
             
-            InfoRowView(title: "Дата начала: ", info: task.projectStartDate != nil ? dateFormatter(date: task.projectStartDate!) : "Не назначено")
+            InfoRowView(title: "Дата начала: ", info: task.projectStartDate != nil ? DateService.dateFormatter(date: task.projectStartDate!) : "Не назначено")
             
-            InfoRowView(title: "Дата Конца: ", info: task.projectEndDate != nil ? dateFormatter(date: task.projectEndDate!) : "Не назначено")
+            InfoRowView(title: "Дата Конца: ", info: task.projectEndDate != nil ? DateService.dateFormatter(date: task.projectEndDate!) : "Не назначено")
         }
         .frame(
             minWidth: 0,
@@ -42,11 +42,5 @@ struct TaskCard: View {
                 Label("письмо контакту", systemImage: "mail.fill")
             }
         }
-    }
-}
-
-struct TaskCard_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskCard(task: MOCK_TASK)
     }
 }

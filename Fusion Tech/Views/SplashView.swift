@@ -12,18 +12,25 @@ struct SplashView: View {
     @State private var isLoading = false
     
     var body: some View {
-        Circle()
-            .stroke(
-                AngularGradient(colors: ARRAY_LOGO_COLORS, center: .center),
-                style: StrokeStyle(lineWidth: size/10, lineCap: .round, dash: [size/100, size/5])
-            )
-            .frame(width: size, height: size, alignment: .center)
-            .onAppear(perform: {
-                withAnimation(Animation.easeInOut(duration: 2).repeatForever()) {
+        VStack {
+            Circle()
+                .stroke(
+                    AngularGradient(colors: ARRAY_LOGO_COLORS, center: .center),
+                    style: StrokeStyle(lineWidth: size/10, lineCap: .round, dash: [size/100, size/5])
+                )
+                .frame(width: size, height: size, alignment: .center)
+                .rotationEffect(Angle(degrees: isLoading ? 360 : 0))
+        }
+        .frame(width: size, height: size, alignment: .center)
+        .onAppear {
+            DispatchQueue.main.async {
+                withAnimation(
+                    .easeInOut(duration: 2)
+                    .repeatForever(autoreverses: false)) {
                     isLoading.toggle()
                 }
-            })
-            .rotationEffect(Angle(degrees: isLoading ? 0 : 360))
+            }
+        }
     }
 }
 

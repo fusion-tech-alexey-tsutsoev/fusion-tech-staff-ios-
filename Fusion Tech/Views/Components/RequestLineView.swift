@@ -36,15 +36,15 @@ struct RequestLineView: View {
                     if let dateFrom = request.dateFrom {
                         Text("Когда")
                         
-                        InfoRowView(title: "C", info: dateFormatter(date: dateFrom))
+                        InfoRowView(title: "C", info: DateService.dateFormatter(date: dateFrom))
                         
-                        InfoRowView(title: "По", info: dateFormatter(date: request.dateTo))
+                        InfoRowView(title: "По", info: DateService.dateFormatter(date: request.dateTo))
                     } else {
-                        InfoRowView(title: "Дата: ", info: dateFormatter(date: request.dateTo))
+                        InfoRowView(title: "Дата: ", info: DateService.dateFormatter(date: request.dateTo))
                     }
                     InfoRowView(title: "Комментарий: ", info: request.comment)
                     
-                    InfoRowView(title: "Вынес решение: ", info: String(request.updatedBy))
+                    InfoRowView(title: "Вынес решение: ", info: getUpdatedBy())
                     
                     InfoRowView(title: "Статус: ", info: request.status.statusRu)
                 })
@@ -60,6 +60,12 @@ struct RequestLineView: View {
     }
     
     // MARK: - Helpers
+    private func getUpdatedBy() -> String {
+        guard let updatedBy = request.updatedBy else {
+            return "Пока никто"
+        }
+        return String(updatedBy)
+    }
     private func getSystemNameByStatus() -> String {
         switch request.status {
         case .completed:
@@ -117,6 +123,6 @@ struct RequestLineView: View {
 
 struct RequestLineView_Previews: PreviewProvider {
     static var previews: some View {
-        RequestLineView(request: RequestInfo(id: 1, title: "Test", type: .dayOff, dateFrom: "", dateTo: "", comment: "Test comment", status: .completed, restDaysNumber: 1, createdAt: "", updatedAt: "", updatedBy: 70, user: []))
+        RequestLineView(request: RequestInfo(id: 1, title: "Test", type: .dayOff, dateFrom: "", dateTo: "", comment: "Test comment", status: .completed, restDaysNumber: 1, createdAt: "", updatedAt: "", updatedBy: 70, user: [], dates: nil, deniedComment: nil))
     }
 }

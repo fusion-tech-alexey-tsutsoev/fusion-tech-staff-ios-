@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             if store.state.isLoading {
-                SplashView(size: 100)
+                LaunchView()
             } else {
                 if store.state.isAuth {
                     TabBarView().environmentObject(store)
@@ -22,11 +22,32 @@ struct ContentView: View {
                     LoginView().environmentObject(store)
                 }
             }
-        }.onAppear {
-            asyncCheckUser(store: store)
+            
+            
+            CustomToastView(isPresent: store.state.isShowToast)
+                .onChange(of: store.state.isShowToast) { newValue in
+                    if newValue {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                            withAnimation {
+                                store.dispatch(action: .setToast(toast: nil, isShow: false))
+                            }
+                        }
+                    }
+                }
+            
         }
-        .popup(isPresented: $store.state.isShowToast, type: .floater(verticalPadding: 100), position: .bottom, autohideIn: 5, closeOnTapOutside: true) {
-            CustomToastView(type: store.state.toast?.type ?? .error, title: store.state.toast?.message ?? "Ошибка")
+        .onAppear {
+            store.dispatch(action: .setLoading(value: true))
+            DispatchQueue.main.async {
+                UserService.shared.checkUser { result in
+                    guard let user = try? result.get() else {
+                        store.dispatch(action: .setLoading(value: false))
+                        return
+                    }
+                    store.dispatch(action: .updateUser(user: user))
+                    store.dispatch(action: .setLoading(value: false))
+                }
+            }
         }
     }
 }

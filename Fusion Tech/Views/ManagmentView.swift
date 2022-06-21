@@ -11,6 +11,7 @@ import PDFKit
 
 struct ManagmentView: View {
     @ObservedObject private var managmentVM = ManagmentViewModel()
+    let exportedDocument: PDFExporter? = nil
     
     var body: some View {
         VStack {
@@ -25,8 +26,8 @@ struct ManagmentView: View {
                         managmentVM.cleintTeamName = ""
                     }
                 })
-                    .floatingBaseStyle()
-                    .disableAutocorrection(true)
+                .floatingBaseStyle()
+                .disableAutocorrection(true)
                 
                 ForEach(managmentVM.clientTeamNames, id: \.self) { clientName in
                     Text(clientName).padding(.top)
@@ -39,8 +40,8 @@ struct ManagmentView: View {
                         managmentVM.yourTeamName = ""
                     }
                 })
-                    .floatingBaseStyle()
-                    .disableAutocorrection(true)
+                .floatingBaseStyle()
+                .disableAutocorrection(true)
                 
                 ForEach(managmentVM.yourTeamNames, id: \.self) { yourName in
                     Text(yourName).padding(.top)
@@ -53,8 +54,8 @@ struct ManagmentView: View {
                         managmentVM.discussionItem = ""
                     }
                 })
-                    .floatingBaseStyle()
-                    .disableAutocorrection(true)
+                .floatingBaseStyle()
+                .disableAutocorrection(true)
                 
                 ForEach(managmentVM.discussionItems, id: \.self) { item in
                     Text(item).padding(.top)
@@ -67,8 +68,8 @@ struct ManagmentView: View {
                         managmentVM.arragement = ""
                     }
                 })
-                    .floatingBaseStyle()
-                    .disableAutocorrection(true)
+                .floatingBaseStyle()
+                .disableAutocorrection(true)
                 
                 ForEach(managmentVM.arragements, id: \.self) { arragement in
                     Text(arragement).padding(.top)
@@ -84,14 +85,12 @@ struct ManagmentView: View {
                 .padding(.vertical)
             }
             
-            Button {
+            CustomButton(onPress: {
                 managmentVM.isShowExporter = true
-            } label: {
-                Text("Cоздать письмо")
-            }
-            .getFilled(isDisabled: false)
+            }, label: "Cоздать письмо")
             
         }
+        .navigationTitle("Создание письма")
         .padding()
         .fileExporter(isPresented: $managmentVM.isShowExporter, documents: [createPDF()], contentType: .pdf) { result in
             switch (result) {
@@ -105,6 +104,7 @@ struct ManagmentView: View {
     }
     
     private func createPDF() -> PDFExporter {
+        print("adf")
         let pdfCreator = PDFCreator(fusionMembers: managmentVM.yourTeamNames,
                                     clientCompanyName: managmentVM.clientComanyName,
                                     clientTeam: managmentVM.clientTeamNames,

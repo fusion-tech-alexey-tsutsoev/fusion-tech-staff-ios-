@@ -11,6 +11,7 @@ import FloatingLabelTextFieldSwiftUI
 struct SignUpSheetView: View {
     // MARK: - View Model
     @ObservedObject private var signUpVM = SignUpViewModel()
+    
     let signUpAction: (SignUpViewModel) -> Void
     let OkAction: () -> Void
     
@@ -47,11 +48,9 @@ struct SignUpSheetView: View {
             
             Spacer()
             
-            Button(action: {
+            CustomButton(onPress: {
                 signUpAction(signUpVM)
-            }, label: {
-                Text("Зарегестрироваться")
-            }).getFilled(isDisabled: getDisabled())
+            }, label: "Зарегестрироваться")
         }
         .padding()
         .alert(signUpVM.alertMessage, isPresented: $signUpVM.isShowAlert) {

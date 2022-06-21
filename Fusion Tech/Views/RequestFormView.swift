@@ -10,18 +10,23 @@ import FloatingLabelTextFieldSwiftUI
 import ExytePopupView
 
 struct RequestFormView: View {
-    @ObservedObject private var requestVM = RequestViewModel()
+    @ObservedObject var requestVM: RequestViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10, content: {
             ScrollView {
-                Picker("Тип заявки", selection: $requestVM.requestType) {
-                    ForEach(RequstEnum.allCases) {
-                        requestType in
-                        Text(requestType.value).tag(requestType)
+                HStack {
+                    Text("Тип заявки: ")
+                    Spacer()
+                    Picker("Тип заявки", selection: $requestVM.requestType) {
+                        ForEach(RequstEnum.allCases) {
+                            requestType in
+                            Text(requestType.value).tag(requestType)
+                        }
                     }
+                    .pickerStyle(.menu)
                 }
-                .pickerStyle(.wheel)
+                .padding(.vertical)
                 
                 Spacer()
                 
@@ -41,24 +46,24 @@ struct RequestFormView: View {
                     Toggle("На весь день?", isOn: $requestVM.isAllDay.animation())
                 }
                 
-                FloatingLabelTextField($requestVM.title, placeholder: "Заголвоок")
+                FloatingLabelTextField($requestVM.title, placeholder: "Заголовок")
                     .addValidation(.init(condition: !requestVM.title.isEmpty, errorMessage: "Заголовок обязателен"))
                     .isShowError(true)
                     .floatingBaseStyle()
                 
-                FloatingLabelTextField($requestVM.comment, placeholder: "Коментарий")
+                FloatingLabelTextField($requestVM.comment, placeholder: "Комментарий")
                     .addValidation(.init(condition: !requestVM.comment.isEmpty, errorMessage: "Комментарий обязателен"))
                     .isShowError(true)
                     .floatingBaseStyle()
             }
             
-            Button {
-                sendRequest()
-            } label: {
-                Text("Отправить")
-            }
-            .getFilled(isDisabled: requestVM.title.isEmpty || requestVM.comment.isEmpty)
-            
+            CustomButton(
+                onPress: { requestVM.sendRequest() },
+                label: "Отправить",
+                isLoading: requestVM.isLoading,
+                type: .filled,
+                disabled: requestVM.title.isEmpty || requestVM.comment.isEmpty
+            )
         })
             .frame(
                 minWidth: 0,
@@ -72,7 +77,8 @@ struct RequestFormView: View {
                 updateType(type: newType)
             }
             .popup(isPresented: $requestVM.isShowToast, type: .floater(verticalPadding: 100), position: .bottom, autohideIn: 5, closeOnTapOutside: true) {
-                CustomToastView(type: requestVM.toastType, title: requestVM.toastMessage)
+                // TODO: - improve
+//                CustomToastView()
             }
     }
     

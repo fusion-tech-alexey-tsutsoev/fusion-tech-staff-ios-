@@ -11,43 +11,53 @@ import SwiftUI
 struct TabBarView: View {
     // MARK: - Enviroment
     @EnvironmentObject var store: Store
-    // MARK: - Config
-    init() {
-        let appearance = UITabBar.appearance()
-        appearance.backgroundColor = NAV_UI_NAV_BACKGROUND
-        appearance.unselectedItemTintColor = SECUNDARY_UI_COLOR
-    }
+    @ObservedObject private var tabBarVM = TabBarViewModel()
     
     var body: some View {
-        TabView {
-            // MARK: - Member list
-            HomeNavigation().tabItem {
-                Image(systemName: "house.fill")
-                Text("Главная")
-            }
-            // MARK: - Add Request
-            RequestFormView().tabItem {
-                Image(systemName: "plus.circle")
-                Text("Создать заявку")
-            }
-            // MARK: - User screen
-            UserInfoView().tabItem {
-                Image(systemName: "person.fill")
-                Text("Информация")
-            }
-            
-            // MARK: - Admin Panel
-            if store.state.user?.role == "admin" {
-                AdminPanelView().tabItem {
-                    Image(systemName: "chart.bar.fill")
-                    Text("Администрация")
+        NavigationView {
+            VStack(spacing: 0) {
+                ZStack(alignment: .bottom) {
+                        switch tabBarVM.selection {
+                        case 0:
+                            MemberListView()
+                        case 1:
+                            ArticleListView()
+                        case 2:
+                            Celebrations()
+                        case 3:
+                            UserInfoView()
+                        default:
+                            MemberListView()
+                        }
+                    
+                    if (tabBarVM.isShowMenu) {
+                        BlurEffect(effect: UIBlurEffect(style: .dark))
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                tabBarVM.menuToggle()
+                            }
+                    }
+                    
+                    NavPopUpMenuView(isPresent: tabBarVM.isShowMenu)
+                    
+                }
+                .toolbar {
+                    if store.state.user?.role == "admin" {
+                        NavigationLink {
+                            AdminNavigation()
+                        } label: {
+                            Image(systemName: "doc.on.clipboard")
+                                .foregroundColor(PRIMARY_COLOR)
+                        }
+
+                    }
                 }
                 
-                ManagmentView().tabItem {
-                    Image(systemName: "doc.on.clipboard")
-                    Text("Менеджмент")
-                }
+                Divider()
+                    .background(PRIMARY_COLOR)
+                
+                BottomNavBar(tabBarVM: tabBarVM)
             }
-        }.accentColor(PRIMARY_COLOR)
+        }
     }
 }

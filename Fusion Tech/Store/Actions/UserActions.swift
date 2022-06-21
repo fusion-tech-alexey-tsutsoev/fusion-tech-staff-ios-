@@ -12,5 +12,5 @@ enum UserAction {
     case updateUser(user: User)
     case logOut
     case setLoading(value: Bool)
-    case setToast(toast: ToastState, isShow: Bool)
+    case setToast(toast: ToastState?, isShow: Bool)
 }

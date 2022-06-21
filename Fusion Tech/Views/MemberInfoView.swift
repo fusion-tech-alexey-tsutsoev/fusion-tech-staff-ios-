@@ -7,36 +7,91 @@
 
 import SwiftUI
 
+@in
+
 struct MemberInfoView: View {
     let member: TeamMember
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            CustomAsyncImageView(avatar: member.avatar ?? "", size: 200)
-            
-            Group {
-                InfoRowView(title: "Login", info: member.login)
+        ScrollView {
+            VStack(alignment: .leading) {
+                CustomAsyncImageView(avatar: member.avatar ?? "", size: .infinity)
+                    .padding(.bottom, 10)
                 
-                InfoRowView(title: "Имя", info: "\(member.firstNameRu ?? "Иван") / \(member.firstName ?? "Ivan")")
+                Group {
+                    InfoRowView(title: "Login", info: member.login)
+                    
+                    InfoRowView(title: "Имя", info: "\(member.firstNameRu ?? "Иван") / \(member.firstName ?? "Ivan")")
+                    
+                    InfoRowView(title: "Фамилия", info: "\(member.lastNameRu ?? "Иванов") / \(member.lastName ?? "Ivanov")")
+                    
+                    InfoRowView(title: "Дата рождения", info: DateService.dateFormatter(date: member.doB ?? ""))
+                    
+                    PhoneInfoRow(phone: member.phone)
+                    
+                    EmailInfoRow(email: member.email)
+                }
                 
-                InfoRowView(title: "Фамилия", info: "\(member.lastNameRu ?? "Иванов") / \(member.lastName ?? "Ivanov")")
+                if let repos = member.repo {
+                    CustomDivider()
+                    
+                    Text("Репозитории: ")
+                        .font(.title)
+                    
+                    ForEach(repos, id: \.self) { repo in
+                        Button {
+                            if let url = URL(string: repo) {
+                                UIApplication.shared.open(url)
+                            }
+                        } label: {
+                            Text(repo)
+                        }
+                    }
+                }
                 
-                InfoRowView(title: "Дата рождения", info: dateFormatter(date: member.doB ?? ""))
+                if let workingFrom = member.workingFrom {
+                    
+                    CustomDivider()
+                    
+                    InfoRowView(title: "В компании", info: DateService.makeDateDiff(timeStamp: workingFrom))
+                    
+                }
                 
-                PhoneInfoRow(phone: member.phone)
-                
-                EmailInfoRow(email: member.email)
+                if isHaveAdditinalContact() {
+                    
+                    CustomDivider()
+                    
+                    Text("Дополнительный контакт")
+                        .font(.title)
+                        .padding(.bottom, 10)
+                    
+                    InfoRowView(title: "Имя", info: member.additionalContactName ?? "Джон До")
+                    
+                    InfoRowView(title: "Кто", info: member.additionalContactType ?? "близкий")
+                    
+                    if let additionalPhone = member.additionalContactPhone {
+                        PhoneInfoRow(phone: additionalPhone)
+                    }
+                    
+                }
             }
+            .frame(
+                minWidth: 0,
+                maxWidth: .infinity,
+                minHeight: 0,
+                maxHeight: .infinity,
+                alignment: .topLeading
+            )
+            .padding()
+            .navigationTitle(Text(getFullNameString(member: member)))
         }
-        .frame(
-            minWidth: 0,
-            maxWidth: .infinity,
-            minHeight: 0,
-            maxHeight: .infinity,
-            alignment: .topLeading
-        )
-        .padding()
-        .navigationTitle(Text(getFullNameString(member: member)))
+    }
+    
+    private func isHaveAdditinalContact() -> Bool {
+        guard let additionalContactType = member.additionalContactType, let additionalContactName = member.additionalContactName, let additionalContactPhone = member.additionalContactPhone else {
+            return false
+        }
+        return !(additionalContactType.isEmpty && additionalContactName.isEmpty && additionalContactPhone.isEmpty)
     }
 }
 

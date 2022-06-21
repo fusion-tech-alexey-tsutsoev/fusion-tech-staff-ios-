@@ -31,7 +31,7 @@ class EditUserViewModel: ObservableObject {
         firstNameRu = userInfo?.firstNameRu ?? ""
         lastName = userInfo?.lastName ?? ""
         lastNameRu = userInfo?.lastNameRu ?? ""
-        dob = userInfo != nil ? timeStampFormatter(date: userInfo!.doB) : Date()
+        dob = userInfo != nil ? DateService.timeStampFormatter(date: userInfo!.doB) : Date()
         repos = userInfo?.repo ?? []
         education = userInfo?.education ?? ""
         info = userInfo?.info ?? ""

@@ -11,21 +11,30 @@ struct RequestSectionView: View {
     // MARK: - Screen State
     @State private var isLoading = false
     @State private var requests: [RequestInfo] = []
-    let userId: Int
+    let userId: Int?
     
     var body: some View {
-        VStack(alignment: .center, spacing: 20) {
+        VStack {
             if isLoading {
                 SplashView(size: 100)
             }
             if requests.isEmpty {
                 EmptyDataView(title: "У Вас нет ни одной заявки")
             } else {
-                ForEach(requests) { request in
-                    RequestLineView(request: request)
+                ScrollView {
+                    ForEach(requests) { request in
+                        RequestLineView(request: request)
+                    }
                 }
             }
         }
+        .frame(
+              minWidth: 0,
+              maxWidth: .infinity,
+              minHeight: 0,
+              maxHeight: .infinity,
+              alignment: .center
+            )
         .onAppear {
             loadRequests()
         }
@@ -33,8 +42,12 @@ struct RequestSectionView: View {
     
     // MARK: - Helpers
     private func loadRequests() {
+        guard let id = userId else {
+            return
+        }
         isLoading = true
-        RequestService.shared.getUserRequest(userID: userId) { result in
+        RequestService.shared.getUserRequest(userID: id) { result in
+            print("result \(result)")
             guard let requestsFromApi = try? result.get() else {
                 return
             }

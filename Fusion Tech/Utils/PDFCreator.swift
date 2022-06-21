@@ -21,7 +21,7 @@ class PDFCreator {
     let additionalInfo: String?
     
     init(fusionMembers: [String], clientCompanyName: String, clientTeam: [String], discussionItems: [String], arrigments: [String], additionalInfo: String?) {
-        formattedDate = engDateFormatter(date: Date())
+        formattedDate = DateService.engDateFormatter(date: Date())
         self.fusionMembers = fusionMembers
         self.clientCompanyName = clientCompanyName
         self.clientTeam = clientTeam
@@ -100,19 +100,19 @@ class PDFCreator {
         let attrebuttedArrigments = getNumereAttrebuttedStringArray(array: arrigments, attrebutes: generalAtrrebutes)
         
         // MARK: - gradient
-//        let gradinetArray = [
-//            FIRST_LOGO_COLOR.cgColor,
-//            SECOND_LOGO_COLOR.cgColor,
-//            THRID_LOGO_COLOR.cgColor,
-//            FOURTH_LOGO_COLOR.cgColor,
-//            FIFTH_LOGO_COLOR.cgColor,
-//            SIXTH_LOGO_COLOR.cgColor,
-//        ]
-//
-//        let cgGradient = CGGradient(
-//            colorsSpace: CGColorSpaceCreateDeviceRGB(),
-//            colors: gradinetArray as CFArray,
-//            locations:[0.0, 1.0])
+        let gradinetArray = [
+            FIRST_LOGO_COLOR.cgColor,
+            SECOND_LOGO_COLOR.cgColor,
+            THRID_LOGO_COLOR.cgColor,
+            FOURTH_LOGO_COLOR.cgColor,
+            FIFTH_LOGO_COLOR.cgColor,
+            SIXTH_LOGO_COLOR.cgColor,
+        ]
+        
+        let cgGradient = CGGradient(
+            colorsSpace: CGColorSpaceCreateDeviceRGB(),
+            colors: gradinetArray as CFArray,
+            locations:[0.0, 1.0])
         
         let data = renderer.pdfData { (context) in
             context.beginPage()
@@ -122,7 +122,7 @@ class PDFCreator {
             attrebuttedTime.draw(in: CGRect(x: 452, y: 35, width: 118, height: 30))
             
             // top line
-            drawTearOffs(drawContext, pageRect: pageRect, tearOffY: 75, end: pageRect.width - 22)
+            drawTearOffs(drawContext, pageRect: pageRect, tearOffY: 75, end: pageRect.width - 22, cgGradient: cgGradient)
             
             // subTitles
             attrebuttedMettingRec.draw(at: CGPoint(x: 22, y: 83))
@@ -130,7 +130,7 @@ class PDFCreator {
             // members section
             attrebuttedMembers.draw(at: CGPoint(x: 22, y: 155))
             
-            drawTearOffs(drawContext, pageRect: pageRect, tearOffY: 185, end: pageRect.width - 273)
+            drawTearOffs(drawContext, pageRect: pageRect, tearOffY: 185, end: pageRect.width - 273, cgGradient: cgGradient)
             
             attrebuttedFucionSub.draw(at: CGPoint(x: 32, y: 200))
             
@@ -144,7 +144,7 @@ class PDFCreator {
             
             attrebuttedDisItemsTitle.draw(at: CGPoint(x: 22, y: 300))
             
-            drawTearOffs(drawContext, pageRect: pageRect, tearOffY: 330, end: pageRect.width - 273)
+            drawTearOffs(drawContext, pageRect: pageRect, tearOffY: 330, end: pageRect.width - 273, cgGradient: cgGradient)
             
             drawList(array: attrebuttedDisItems, startX: 32, startY: 350)
             
@@ -152,7 +152,7 @@ class PDFCreator {
             
             attrebuttedArrigmentsTitle.draw(at: CGPoint(x: 22, y: 445))
             
-            drawTearOffs(drawContext, pageRect: pageRect, tearOffY: 475, end: pageRect.width - 273)
+            drawTearOffs(drawContext, pageRect: pageRect, tearOffY: 475, end: pageRect.width - 273, cgGradient: cgGradient)
             
             drawList(array: attrebuttedArrigments, startX: 35, startY: 495)
             
@@ -160,7 +160,7 @@ class PDFCreator {
             
             attrebuttedDdInfoTitle.draw(at: CGPoint(x: 22, y: 590))
             
-            drawTearOffs(drawContext, pageRect: pageRect, tearOffY: 620, end: pageRect.width - 273)
+            drawTearOffs(drawContext, pageRect: pageRect, tearOffY: 620, end: pageRect.width - 273, cgGradient: cgGradient)
             
             attrebuttedAdditionalInfo.draw(at: CGPoint(x: 35, y: 640))
         }
@@ -173,10 +173,16 @@ class PDFCreator {
         }
     }
     
-    private func drawTearOffs(_ drawContext: CGContext, pageRect: CGRect, tearOffY: CGFloat, end: CGFloat) {
+    private func drawTearOffs(_ drawContext: CGContext, pageRect: CGRect, tearOffY: CGFloat, end: CGFloat, cgGradient: CGGradient?) {
+        if let gradient = cgGradient {
+            print("gradient \(gradient)")
+            let layer = CGLayer(drawContext, size: CGSize(width: end, height: 4), auxiliaryInfo: nil);
+            layer?.context!.drawLinearGradient(gradient, start: CGPoint(x: 0, y: 0), end: CGPoint(x: end, y: 4), options: []);
+            return
+        }
         drawContext.saveGState()
         drawContext.setLineWidth(4.0)
-
+        
         drawContext.move(to: CGPoint(x: 22, y: tearOffY))
         drawContext.addLine(to: CGPoint(x: end, y: tearOffY))
         drawContext.setStrokeColor(CGColor(red: 189/255, green: 114/255, blue: 255/255, alpha: 1))
@@ -190,5 +196,5 @@ class PDFCreator {
             return array.enumerated().map { (index, string) in
                 NSAttributedString(string: "\(index + 1). \(string)", attributes: attrebutes)
             }
-    }
+        }
 }

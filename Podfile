@@ -8,6 +8,8 @@ target 'Fusion Tech' do
   # Pods for Fusion Tech
 	pod 'Alamofire'
 	pod 'FloatingLabelTextFieldSwiftUI', '~> 4.2'
-  pod 'ExytePopupView'
-  pod 'KeychainSwift', '~> 20.0'
+  	pod 'ExytePopupView'
+  	pod 'KeychainSwift', '~> 20.0'
+  	pod 'PagerTabStripView', '~> 3.2.0'
+	pod 'SwiftUICalendar'
 end

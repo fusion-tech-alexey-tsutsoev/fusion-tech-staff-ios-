@@ -11,23 +11,27 @@ struct UserCardView: View {
     let member: TeamMember
     
     var body: some View {
-        HStack( alignment: .center, spacing: 20) {
-            CustomAsyncImageView(avatar: member.avatar ?? "", size: 120)
-            VStack(alignment: .leading, spacing: 5) {
-                Text(getFullNameString(member: member))
-                    .foregroundColor(FONT_COLOR)
-                    .multilineTextAlignment(.leading)
+        NavigationLink(destination: MemberInfoView(member: member)) {
+            HStack( alignment: .center, spacing: 20) {
+                CustomAsyncImageView(avatar: member.avatar ?? "", size: 54)
+                VStack(alignment: .leading, spacing: 5) {
+                    ThemedText(text: getFullNameString(member: member), weight: .bold)
+                    
+                    
+                    ThemedText(text: convertTechRole(role: member.techRole), weight: .thin)
+                }
                 
-                Text(member.phone)
-                    .foregroundColor(FONT_COLOR)
-                    .multilineTextAlignment(.leading)
+                Spacer()
                 
-                Text(member.email)
-                    .foregroundColor(FONT_COLOR)
-                    .multilineTextAlignment(.leading)
-                
-                Text(convertTechRole(role: member.techRole))
-                    .foregroundColor(FONT_COLOR)
+                HStack {
+                    ImageButton(systemImageName: "phone.fill") {
+                        openLink(link: "tel://\(member.phone)")
+                    }
+                    
+                    ImageButton(systemImageName: "envelope") {
+                        openLink(link: "mailto:\(member.email)")
+                    }
+                }
             }
         }
         .frame(
@@ -44,13 +48,13 @@ struct UserCardView: View {
             Button {
                 openLink(link: "tel://\(member.phone)")
             } label: {
-                Label("Позвонить контакту", systemImage: "phone.fill")
+                Label("Позвонить контакту", systemImage: "phone")
             }
             
             Button {
                 openLink(link: "mailto:\(member.email)")
             } label: {
-                Label("письмо контакту", systemImage: "mail.fill")
+                Label("письмо контакту", systemImage: "envelope")
             }
             
             Button {

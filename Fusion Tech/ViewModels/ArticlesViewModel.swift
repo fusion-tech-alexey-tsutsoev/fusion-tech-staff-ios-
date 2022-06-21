@@ -18,8 +18,14 @@ class ArticlesViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var isShowFilters = false
     @Published var isSHowSheet = false
+    @Published var isShowToast = false
     
     // MARK: model for create
     @Published var postLink: String = ""
     @Published var selectedTags: [Int] = []
+    
+    func setError(err: ApiError) {
+        error = err.errorDescriprion
+        isShowToast = true
+    }
 }

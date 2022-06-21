@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TaskInfoView: View {
-    let task: CompanyTask
+    let task: CRM
     @ObservedObject var taskInfoVM = TaskInfoViewModel()
     
     var body: some View {
@@ -20,15 +20,12 @@ struct TaskInfoView: View {
             if (!taskInfoVM.subscriptions.isEmpty) {
                 Section("Команда") {
                     ForEach(taskInfoVM.subscriptions) { user in
-                        NavigationLink(destination: MemberInfoView(member: user)) {
-                            UserCardView(member: user)
-                        }
-                        
+                        UserCardView(member: user)
                     }
                 }
             }
             Section("Базовая нформация") {
-                InfoRowView(title: "Описание:", info: task.bodyDescription)
+                InfoRowView(title: "Описание:", info: task.crmDescription)
                 
                 InfoRowView(title: "Стек:", info: task.technologies.joined(separator: ","))
                 
@@ -56,21 +53,21 @@ struct TaskInfoView: View {
             }
             
             Section("Даты") {
-                InfoRowView(title: "Дата создания:", info: dateFormatter(date: task.createdAt))
+                InfoRowView(title: "Дата создания:", info: DateService.dateFormatter(date: task.createdAt))
                 
-                InfoRowView(title: "Дата Обновления:", info: dateFormatter(date: task.updatedAt))
+                InfoRowView(title: "Дата Обновления:", info: DateService.dateFormatter(date: task.updatedAt))
                 
-                InfoRowView(title: "Дата начала:", info: task.projectStartDate != nil ? dateFormatter(date: task.projectStartDate!) : "Не назначено")
+                InfoRowView(title: "Дата начала:", info: task.projectStartDate != nil ? DateService.dateFormatter(date: task.projectStartDate!) : "Не назначено")
                 
-                InfoRowView(title: "Дата Конца:", info: task.projectEndDate != nil ? dateFormatter(date: task.projectEndDate!) : "Не назначено")
+                InfoRowView(title: "Дата Конца:", info: task.projectEndDate != nil ? DateService.dateFormatter(date: task.projectEndDate!) : "Не назначено")
                 
                 if let eventDate = task.eventDatetime {
-                    InfoRowView(title: "Дата Cобытия:", info: dateFormatter(date: eventDate))
+                    InfoRowView(title: "Дата Cобытия:", info: DateService.dateFormatter(date: eventDate))
                 }
             }
             
             Section("Ссылки") {
-                InfoRowView(title: "CRM:", info: task.jobLink ?? "No")
+                InfoRowView(title: "CRM:", info: task.jobLink)
                 
                 Button {
                     openLink(link: task.proposalLink)
@@ -105,8 +102,8 @@ struct TaskInfoView: View {
     }
 }
 
-struct TaskInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        TaskInfoView(task: MOCK_TASK)
-    }
-}
+//struct TaskInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        TaskInfoView(task: MOCK_TASK)
+//    }
+//}

@@ -48,14 +48,11 @@ struct CreateArticleSheetView: View {
                     }
                 }
             }
-            Button {
-                print("tet")
+            
+            CustomButton(onPress: {
                 createArticle()
-            } label: {
-                Text("Отправить")
-            }
-            .getFilled(isDisabled: link.isEmpty)
-
+            }, label: "Отправить", disabled: link.isEmpty)
+            
         }
         .padding()
     }

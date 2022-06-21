@@ -8,41 +8,30 @@
 import SwiftUI
 
 struct MemberListView: View {
-    @State private var isLoading = false
-    @State private var memberList: [TeamMember] = []
+    @ObservedObject private var memberListVM = MemberListViewModel()
     
+    // MARK: - BODY
     var body: some View {
-        ScrollView {
-            LazyVStack(alignment: .center, spacing: 0) {
-                if isLoading {
-                    SplashView(size: 50)
-                        .padding(.vertical, 20)
+        List {
+            Section {
+                ForEach(memberListVM.searchResults) { member in
+                    UserCardView(member: member)
                 }
-                ForEach(memberList) { member in
-                    NavigationLink(destination: MemberInfoView(member: member)) {
-                        UserCardView(member: member)
+            } header: {
+                if memberListVM.isLoading {
+                    VStack(alignment: .center) {
+                        SplashView(size: 50)
                     }
+                    .frame(minWidth: 0, maxWidth: .infinity)
                 }
             }
         }
+        .searchable(text: $memberListVM.searchValue)
+        .listStyle(.plain)
         .onAppear {
-            loadTeam()
+            memberListVM.loadTeam()
         }
-    }
-    
-    //MARK: - Helpers
-    private func loadTeam() {
-        isLoading = true
-        DispatchQueue.main.async {
-            ListsServices.shared.getActiveUser { result in
-                guard let users = try? result.get() else {
-                    isLoading = false
-                    return
-                }
-                memberList = users
-                isLoading = false
-            }
-        }
+        .navigationTitle(Text("Главная"))
     }
 }
 

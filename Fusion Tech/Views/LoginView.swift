@@ -32,23 +32,20 @@ struct LoginView: View {
             Spacer()
             
             VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/, spacing: 20, content: {
-                Button(action: {
-                    asyncDispatchUser(login: loginVM.login, password: loginVM.password, store: store)
-                }, label: {
-                    Text("Вход")
-                })
-                    .getFilled(isDisabled: loginVM.login.isEmpty || loginVM.password.isEmpty)
+                CustomButton(
+                    onPress: { loginVM.signIn(store: store) },
+                    label: "Вход",
+                    isLoading: loginVM.isLoading
+                )
                 
-                Button(action: {
-                    loginVM.isShowSignUp.toggle()
-                }, label: {
-                    Text("Регистрация")
-                })
-                    .getOutLined()
+                CustomButton(
+                    onPress: { loginVM.isShowSignUp.toggle() },
+                    label: "Регистрация",
+                    type: .outlined
+                )
             })
         }
         .padding()
-        .navigationBarBackButtonHidden(true)
         .background(MAIN_BACKGROUND)
         .sheet(isPresented: $loginVM.isShowSignUp) {
             SignUpSheetView(signUpAction: signUp, OkAction: dissmissSHeet)

@@ -44,16 +44,17 @@ class RequestService {
     }
     
     // MARK: - Get tasks for Admin
-    func getTasksByApi(complition: @escaping (Result<TaskResponse, ApiError>) -> Void) {
+    func getTasksByApi(complition: @escaping (Result<CRMResponse, ApiError>) -> Void) {
         SessionManager.shared.sessionManager
             .request(ApiManager.tasks.path)
             .validate()
-            .responseDecodable(of: TaskResponse.self) { response in
+            .responseDecodable(of: CRMData.self) { response in
+                print("response \(response)")
                 guard let tasks = response.value else {
                     complition(.failure(.badResponse))
                     return
                 }
-                complition(.success(tasks))
+                complition(.success(tasks.data))
             }
     }
 }

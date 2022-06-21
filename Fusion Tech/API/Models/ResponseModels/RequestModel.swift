@@ -18,16 +18,18 @@ struct RequestInfo: Codable, Identifiable {
     let title: String
     let type: RequestTypes
     let dateFrom: String?
-    let dateTo: String
+    let dateTo: String?
     let comment: String
     let status: RequestStatusTypes
     let restDaysNumber: Int
     let createdAt, updatedAt: String
-    let updatedBy: Int
+    let updatedBy: Int?
     let user: [UserInRequest]
+    let dates: [String]?
+    let deniedComment: String?
     
     enum CodingKeys: String, CodingKey {
-        case id, title, type, dateFrom, dateTo, comment, status
+        case id, title, type, dateFrom, dateTo, comment, status, deniedComment, dates
         case restDaysNumber = "rest_days_number"
         case createdAt, updatedAt
         case updatedBy = "updated_by"
@@ -45,8 +47,8 @@ struct UserInRequest: Codable {
     let status, doB, slackName, slackConversationalID: String
     let repo: [String]
     let isDev: Bool
-    let workingFrom, additionalContactName, additionalContactType, additionalContactPhone: String
-    let mentorID: Int
+    let workingFrom, additionalContactName, additionalContactType, additionalContactPhone: String?
+    let mentorID: Int?
     let createdAt, updatedAt: String
     let requestUser: RequestUser
     

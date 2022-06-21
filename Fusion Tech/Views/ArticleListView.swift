@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ExytePopupView
 
 struct ArticleListView: View {
     @EnvironmentObject var store: Store
@@ -78,6 +79,18 @@ struct ArticleListView: View {
                 selectedTags: $articlesVM.selectedTags
             )
         }
+        .popup(
+            isPresented: $articlesVM.isShowToast,
+            type: .floater(verticalPadding: 120),
+            position: .bottom, autohideIn: 5,
+            closeOnTapOutside: true,
+            dismissCallback: {
+            articlesVM.error = nil
+        }) {
+            // TODO: - improve
+//            CustomToastView()
+        }
+        .navigationTitle("Статьи")
     }
     
     // MARK: - Helpers
@@ -88,8 +101,7 @@ struct ArticleListView: View {
                 print("in result")
                 switch result {
                 case .failure(let err):
-                    print("err")
-                    store.dispatch(action: .setToast(toast: ToastState(message: err.errorDescriprion, type: .error), isShow: true))
+                    articlesVM.setError(err: err)
                 case .success(let message):
                     print("good")
                     store.dispatch(action: .setToast(toast: ToastState(message: message, type: .success), isShow: true))
@@ -107,25 +119,25 @@ struct ArticleListView: View {
     private func loadArticlesAndTags() {
         articlesVM.isLoading = true
         DispatchQueue.main.async {
-            // MARK: - get article
+//             MARK: - get article
             ArticleService.shared.getAllArticles { result in
                 switch result {
                 case .failure(let err):
-                    store.dispatch(action: .setToast(toast: ToastState(message: err.errorDescriprion, type: .error), isShow: true))
+                    articlesVM.setError(err: err)
                 case .success(let articles):
                     articlesVM.articles = articles
                 }
             }
             
             // MARK: - get tags
-            ArticleService.shared.getTags { resultTag in
-                switch resultTag {
-                case .success(let tags):
-                    articlesVM.tags = tags
-                case .failure(let err):
-                    articlesVM.error = err.errorDescriprion
-                }
-            }
+//            ArticleService.shared.getTags { resultTag in
+//                switch resultTag {
+//                case .success(let tags):
+//                    articlesVM.tags = tags
+//                case .failure(let err):
+//                    articlesVM.error = err.errorDescriprion
+//                }
+//            }
             articlesVM.isLoading = false
         }
     }
