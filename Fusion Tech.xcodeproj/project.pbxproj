@@ -94,6 +94,7 @@
 		36B9138A27909E63000A2EB2 /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B9138927909E63000A2EB2 /* EditUserView.swift */; };
 		36B9138C27909ECB000A2EB2 /* EditUserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B9138B27909ECB000A2EB2 /* EditUserViewModel.swift */; };
 		36B9138E2790B16A000A2EB2 /* CustomDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B9138D2790B16A000A2EB2 /* CustomDivider.swift */; };
+		36C72D722872302D008178CB /* InfoColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36C72D712872302D008178CB /* InfoColumnView.swift */; };
 		36CA58C9279305B700F1009A /* UpdateUserPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CA58C8279305B700F1009A /* UpdateUserPayload.swift */; };
 		36CA58CB27930CA700F1009A /* ToastState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CA58CA27930CA700F1009A /* ToastState.swift */; };
 		36CDD4DF2773AFB400BB7B47 /* CustomAsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36CDD4DE2773AFB400BB7B47 /* CustomAsyncImageView.swift */; };
@@ -209,6 +210,7 @@
 		36B9138927909E63000A2EB2 /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
 		36B9138B27909ECB000A2EB2 /* EditUserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserViewModel.swift; sourceTree = "<group>"; };
 		36B9138D2790B16A000A2EB2 /* CustomDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDivider.swift; sourceTree = "<group>"; };
+		36C72D712872302D008178CB /* InfoColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoColumnView.swift; sourceTree = "<group>"; };
 		36CA58C8279305B700F1009A /* UpdateUserPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserPayload.swift; sourceTree = "<group>"; };
 		36CA58CA27930CA700F1009A /* ToastState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastState.swift; sourceTree = "<group>"; };
 		36CDD4DE2773AFB400BB7B47 /* CustomAsyncImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAsyncImageView.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				36F34A0D284BEBD600F79A94 /* ThemedText.swift */,
 				36F34A0F284BEEE400F79A94 /* ImageButton.swift */,
 				369C9303284C0AC5008251A3 /* SearchBar.swift */,
+				36C72D712872302D008178CB /* InfoColumnView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -732,6 +735,7 @@
 				36AB102927668E320098F4A4 /* Colors.swift in Sources */,
 				365460CE27876FEC0070FFE9 /* SignUpViewModel.swift in Sources */,
 				36B42747276D070A002C8249 /* images.swift in Sources */,
+				36C72D722872302D008178CB /* InfoColumnView.swift in Sources */,
 				366C81F5279F343E00DD7FAF /* HomePickers.swift in Sources */,
 				3621B115279C61C2003EEA7D /* AdminPanelViewModel.swift in Sources */,
 				369C9302284C0078008251A3 /* MemberListViewModel.swift in Sources */,
